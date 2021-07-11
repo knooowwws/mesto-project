@@ -1,5 +1,10 @@
+/* vendor */
+@import url('../vendor/normalize/normalize.css');
+@import url('../vendor/fonts/fonts.css');
+
 /* page */
 @import url('../blocks/page/page.css');
+@import url('../blocks/page/__item/page__item.css');
 
 /* header */
 @import url('../blocks/header/header.css');
@@ -12,3 +17,19 @@
 @import url('../blocks/profile/profile.css');
 @import url('../blocks/profile/__avatar/profile__avatar.css');
 @import url('../blocks/profile/__info/profile__info.css');
+@import url('../blocks/profile/__content/profile__content.css');
+@import url('../blocks/profile/__name/profile__name.css');
+@import url('../blocks/profile/__edit/profile__btn-edit.css');
+@import url('../blocks/profile/__work-place/profile__work-place.css');
+@import url('../blocks/profile/__btn-add/profile__btn-add.css');
+
+/* elements */
+@import url('../blocks/elements/elements.css');
+
+/* cards */
+@import url('../blocks/cards/cards.css');
+@import url('../blocks/cards/__item/cards__item.css');
+@import url('../blocks/cards/__img/cards__img.css');
+@import url('../blocks/cards/__text/cards__cont.css');
+@import url('../blocks/cards/__name/cards__name.css');
+@import url('../blocks/cards/__btn/cards__btn.css');
