@@ -3,4 +3,16 @@
 	font-size: 18px;
 	line-height: 21px;
 	margin: 0;
+	max-width: 336px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+@media screen and (max-width: 1023px) {
+	.profile__work-place {
+		max-width: 223px;
+		font-size: 14px;
+		line-height: 16px;
+	}
 }
