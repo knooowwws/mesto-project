@@ -22,12 +22,12 @@
 			<div class="profile__info">
 				<div class="profile__content">
 					<h1 class="profile__name">Жак-Ив Кусто</h1>
-					<button class="profile__btn-edit" aria-label="edit" type="button"></button>
+					<button class="profile__btn-edit opacity" aria-label="edit" type="button"></button>
 				</div>
 				<p class="profile__work-place">Исследователь океана</p>
 			</div>
 
-			<button class="profile__btn-add" aria-label="add" type="button"></button>
+			<button class="profile__btn-add opacity" aria-label="add" type="button"></button>
 
 		</section>
 
@@ -37,42 +37,42 @@
 					<img class="cards__img" src="./images/dag.jpg" alt="Гамсутль">
 					<div class="cards__cont">
 						<h2 class="cards__name">Дагестан</h2>
-						<button class="cards__btn" type="button"></button>
+						<button class="cards__btn opacity" type="button"></button>
 					</div>
 				</li>
 				<li class="cards__item">
 					<img class="cards__img" src="./images/astra.jpg" alt="Набережная Астрахани">
 					<div class="cards__cont">
 						<h2 class="cards__name">Астрахань</h2>
-						<button class="cards__btn" aria-label="like" type="button"></button>
+						<button class="cards__btn opacity" aria-label="like" type="button"></button>
 					</div>
 				</li>
 				<li class="cards__item">
 					<img class="cards__img" src="./images/adyg.jpg" alt="Адыгея">
 					<div class="cards__cont">
 						<h2 class="cards__name">Адыгея</h2>
-						<button class="cards__btn" aria-label="like" type="button"></button>
+						<button class="cards__btn opacity" aria-label="like" type="button"></button>
 					</div>
 				</li>
 				<li class="cards__item">
 					<img class="cards__img" src="./images/karel.jpg" alt="Карелия">
 					<div class="cards__cont">
 						<h2 class="cards__name">Карелия</h2>
-						<button class="cards__btn" aria-label="like" type="button"></button>
+						<button class="cards__btn opacity" aria-label="like" type="button"></button>
 					</div>
 				</li>
 				<li class="cards__item">
 					<img class="cards__img" src="./images/krym.jpg" alt="Крым">
 					<div class="cards__cont">
 						<h2 class="cards__name">Крым</h2>
-						<button class="cards__btn" aria-label="like" type="button"></button>
+						<button class="cards__btn opacity" aria-label="like" type="button"></button>
 					</div>
 				</li>
 				<li class="cards__item">
 					<img class="cards__img" src="./images/laz.jpg" alt="Лазаревское">
 					<div class="cards__cont">
 						<h2 class="cards__name">Лазаревское</h2>
-						<button class="cards__btn" aria-label="like" type="button"></button>
+						<button class="cards__btn opacity" aria-label="like" type="button"></button>
 					</div>
 				</li>
 			</ul>
@@ -81,20 +81,21 @@
 	</main>
 
 	<footer class="footer page__item">
-		<p class="footer__copyright">© 2020 Mesto Russia</p>
+		<p class="footer__copyright">© 2021 Mesto Russia</p>
 	</footer>
 
 	<div class="popup">
-		<div class="popup__container">
+		<div class=" popup__container">
+			<button class="popup__close opacity" aria-label="close" type="button"></button>
 			<h2 class="popup__title">Редактировать профиль</h2>
-			<form class="popup__input-container" name="popup">
-				<fieldset>
-					<input class="popup__item popup__item_type_name" type="text" name="name" placeholder="Имя">
-					<input class="popup__item popup__item_type_about" type="text" name="about" placeholder="Деятельность">
-					<button class="popup__button" type="submit">Сохранить</button>
+			<form class="form" name="popup">
+				<fieldset class="form__content">
+					<input class="form__input" value="Жак-Ив Кусто" type="text" name="name" placeholder="Имя">
+					<input class="form__input" value="Исследователь океана" type="text" name="profession"
+						placeholder="Деятельность">
 				</fieldset>
+				<button class="popup__submit opacity" type="submit">Сохранить</button>
 			</form>
-			<button class="popup__close-icon" aria-label="close" type="button"></button>
 		</div>
 	</div>
 
