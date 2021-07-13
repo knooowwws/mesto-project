@@ -7,4 +7,14 @@
 	text-align: center;
 	background-color: #000;
 	color: #fff;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 21px;
+}
+
+@media screen and (max-width: 1023px) {
+	.popup__submit {
+		font-size: 14px;
+		line-height: 16px;
+	}
 }
