@@ -1,4 +1,6 @@
 .cards__img {
 	width: 282px;
 	height: 282px;
+	grid-column: 1 / 5;
+	grid-row: 1 / 2;
 }

@@ -6,9 +6,9 @@
 	margin: 0;
 	padding: 0;
 	border: none;
-	position: absolute;
-	right: 20px;
-	bottom: 35px;
+	grid-column: 3 / 4;
+	grid-row: 2 / 3;
+	align-self: center;
 }
 
 .cards__btn:focus {

@@ -8,7 +8,7 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	max-width: 209px;
-	position: absolute;
-	left: 21px;
-	bottom: 31px;
+	grid-column: 2 / 3;
+	grid-row: 2 /3;
+	align-self: center;
 }
