@@ -33,36 +33,6 @@
 
 		<section class="elements page__item">
 			<ul class="cards">
-				<li class="cards__item">
-					<img class="cards__img" src="./images/dag.jpg" alt="Гамсутль">
-					<h2 class="cards__name">Дагестан</h2>
-					<button class="cards__btn opacity" type="button"></button>
-				</li>
-				<li class="cards__item">
-					<img class="cards__img" src="./images/astra.jpg" alt="Набережная Астрахани">
-					<h2 class="cards__name">Астрахань</h2>
-					<button class="cards__btn opacity" aria-label="like" type="button"></button>
-				</li>
-				<li class="cards__item">
-					<img class="cards__img" src="./images/adyg.jpg" alt="Адыгея">
-					<h2 class="cards__name">Адыгея</h2>
-					<button class="cards__btn opacity" aria-label="like" type="button"></button>
-				</li>
-				<li class="cards__item">
-					<img class="cards__img" src="./images/karel.jpg" alt="Карелия">
-					<h2 class="cards__name">Карелия</h2>
-					<button class="cards__btn opacity" aria-label="like" type="button"></button>
-				</li>
-				<li class="cards__item">
-					<img class="cards__img" src="./images/krym.jpg" alt="Крым">
-					<h2 class="cards__name">Крым</h2>
-					<button class="cards__btn opacity" aria-label="like" type="button"></button>
-				</li>
-				<li class="cards__item">
-					<img class="cards__img" src="./images/laz.jpg" alt="Лазаревское">
-					<h2 class="cards__name">Лазаревское</h2>
-					<button class="cards__btn opacity" aria-label="like" type="button"></button>
-				</li>
 			</ul>
 		</section>
 
@@ -72,21 +42,56 @@
 		<p class="footer__copyright">© 2021 Mesto Russia</p>
 	</footer>
 
-	<div class="popup">
-		<div class=" popup__container">
-			<button class="popup__close opacity" aria-label="close" type="button"></button>
+	<div class="popup popup_profile">
+		<div class="popup__container">
+			<button class="popup__close popup__close_profile opacity" aria-label="close" type="button"></button>
 			<h2 class="popup__title">Редактировать профиль</h2>
 			<form class="form" name="popup">
 				<fieldset class="form__content">
-					<input class="form__input" value="Жак-Ив Кусто" type="text" name="name" placeholder="Имя">
-					<input class="form__input" value="Исследователь океана" type="text" name="profession"
+					<input class="form__input form__input_name" value="" type="text" name="name" placeholder="Имя">
+					<input class="form__input form__input_profile" value="" type="text" name="profession"
 						placeholder="Деятельность">
 				</fieldset>
-				<button class="popup__submit opacity" type="submit">Сохранить</button>
+				<button class="popup__submit popup__submit_profile opacity" type="submit">Сохранить</button>
 			</form>
 		</div>
 	</div>
 
+	<div class="popup popup_mesto">
+		<div class="popup__container">
+			<button class="popup__close popup__close_mesto opacity" aria-label="close" type="button"></button>
+			<h2 class="popup__title">Новое место</h2>
+			<form class="form" name="popup">
+				<fieldset class="form__content">
+					<input class="form__input form__input_location" value="" type="text" name="name" placeholder="Название">
+					<input class="form__input form__input_url" value="" type="text" name="profession"
+						placeholder="Ссылка на картинку">
+				</fieldset>
+				<button class="popup__submit popup__submit_mesto opacity" type="submit">Создать</button>
+			</form>
+		</div>
+	</div>
+
+	<div class="popup popup_photo">
+		<div class="popup__photo-container">
+			<button class="popup__close popup__close_photo opacity" aria-label="close" type="button"></button>
+			<figure class="popup__figure">
+				<img src="#" alt="Картинка с местом" class="popup__image">
+				<figcaption class="popup__name"></figcaption>
+			</figure>
+		</div>
+	</div>
+
+
+	<template class="card">
+		<li class="cards__item">
+			<img class="cards__img" src="#" alt="Картинка с местом">
+			<h2 class="cards__name"></h2>
+			<button class="cards__btn opacity" type="button"></button>
+			<div class="cards__trash opacity"></div>
+		</li>
+	</template>
+	<script rel="script" src="scripts/index.js"></script>
 </body>
 
 </html>

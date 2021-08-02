@@ -10,7 +10,3 @@
 	grid-row: 2 / 3;
 	align-self: center;
 }
-
-.cards__btn:focus {
-	background-image: url(../../../images/like-black.svg);
-}
