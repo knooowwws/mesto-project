@@ -1,6 +1,6 @@
 const profile = document.querySelector('.profile');
-let profileName = profile.querySelector('.profile__name');
-let profileWork = profile.querySelector('.profile__work-place');
+const profileName = profile.querySelector('.profile__name');
+const profileWork = profile.querySelector('.profile__work-place');
 const profileEditButton = profile.querySelector('.profile__btn-edit');
 const initialCards = [
     {
@@ -32,34 +32,42 @@ const initialCards = [
 const cardTemplate = document.querySelector('.card').content;
 
 const modalProfile = document.querySelector('.popup_profile')
+const inputName = modalProfile.querySelector('.form__input_name');
+const inputProfile = modalProfile.querySelector('.form__input_profile');
+
+
 const modalAdd = document.querySelector('.popup_mesto')
+const inputLocation = modalAdd.querySelector('.form__input_location');
+const inputUrl = modalAdd.querySelector('.form__input_url');
+
+
 const modalPhoto = document.querySelector('.popup_photo')
 
 
 
 // FUNCTIONS
-let openPopup = (popup) => {
+const openPopup = (popup) => {
     popup.classList.add('popup_opened')
 }
 
-let closePopup = (popup) => {
+const closePopup = (popup) => {
     popup.classList.remove('popup_opened')
 }
 
-let closeAllPopUps = () => {
+const closeAllPopUps = () => {
     document.querySelectorAll('.popup__close').forEach(elem => {
         elem.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup')))
     })
 }
 closeAllPopUps();
 
-let openModalPhoto = (cardEl) => {
+const openModalPhoto = (cardEl) => {
     modalPhoto.querySelector('.popup__image').src = cardEl.url
     modalPhoto.querySelector('.popup__name').textContent = cardEl.name
     openPopup(modalPhoto)
 }
 
-let makeCard = (cardEl) => {
+const makeCard = (cardEl) => {
     const card = cardTemplate.querySelector('.cards__item').cloneNode(true);
     card.querySelector('.cards__name').textContent = cardEl.name;
     card.querySelector('.cards__img').src = cardEl.url;
@@ -69,11 +77,11 @@ let makeCard = (cardEl) => {
     return card;
 }
 
-let addCards = (cardEl) => {
+const addCards = (cardEl) => {
     document.querySelector('.cards').prepend(makeCard(cardEl));
 }
 
-let initialCardGenerate = () => {
+const initialCardGenerate = () => {
     initialCards.forEach(el => {
         addCards(el)
     })
@@ -85,27 +93,27 @@ initialCardGenerate();
 // profile
 profileEditButton.addEventListener('click', () => {
     openPopup(modalProfile);
-    modalProfile.querySelector('.form__input_name').value = profileName.textContent;
-    modalProfile.querySelector('.form__input_profile').value = profileWork.textContent;
+    inputName.value = profileName.textContent;
+    inputProfile.value = profileWork.textContent;
 })
 
-modalProfile.querySelector('.popup__submit_profile').addEventListener('click', (evt) => {
+modalProfile.querySelector('.form_profile').addEventListener('submit', (evt) => {
     evt.preventDefault();
-    profileName.textContent = modalProfile.querySelector('.form__input_name').value;
-    profileWork.textContent = modalProfile.querySelector('.form__input_profile').value;
+    profileName.textContent = inputName.value;
+    profileWork.textContent = inputProfile.value;
     closePopup(modalProfile)
 })
 
 // add
 profile.querySelector('.profile__btn-add').addEventListener('click', () => openPopup(modalAdd));
-modalAdd.querySelector('.popup__submit_mesto').addEventListener('click', (evt) => {
+modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
     evt.preventDefault();
     const cardEl = {
-        name: modalAdd.querySelector('.form__input_location').value,
-        url: modalAdd.querySelector('.form__input_url').value
+        name: inputLocation.value,
+        url: inputUrl.value
     }
     addCards(cardEl);
-    modalAdd.querySelector('.form__input_location').value = ''
-    modalAdd.querySelector('.form__input_url').value = ''
+    inputLocation.value = ''
+    inputUrl.value = ''
     closePopup(modalAdd);
 })
