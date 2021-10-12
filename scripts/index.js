@@ -46,13 +46,35 @@ const modalPhoto = document.querySelector('.popup_photo')
 
 
 // FUNCTIONS
+
+//POPUPS
 const openPopup = (popup) => {
     popup.classList.add('popup_opened')
+    document.addEventListener('keydown', closePopUpWithEsc)
+    popup.addEventListener('click', closePopupWithOverlay);
 }
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened')
+    popup.addEventListener('click', closePopupWithOverlay);
 }
+
+const closePopUpWithEsc = (evt) => {
+    if (evt.key === "Escape") {
+        const popup = document.querySelector(".popup_opened")
+        closePopup(popup);
+    }
+}
+
+const closePopupWithOverlay = (evt) => {
+    if (evt.target.classList.contains('popup')) {
+        const popup = document.querySelector(".popup_opened")
+        closePopup(popup);
+    }
+}
+
+// document.querySelector('.popup').addEventListener('click', closePopup)
+
 
 const closeAllPopUps = () => {
     document.querySelectorAll('.popup__close').forEach(elem => {
@@ -66,6 +88,8 @@ const openModalPhoto = (cardEl) => {
     modalPhoto.querySelector('.popup__name').textContent = cardEl.name
     openPopup(modalPhoto)
 }
+
+//CARDS
 
 const makeCard = (cardEl) => {
     const card = cardTemplate.querySelector('.cards__item').cloneNode(true);
@@ -113,7 +137,101 @@ modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
         url: inputUrl.value
     }
     addCards(cardEl);
-    inputLocation.value = ''
-    inputUrl.value = ''
+    evt.reset()
+    // inputLocation.value = ''
+    // inputUrl.value = ''
     closePopup(modalAdd);
 })
+
+
+
+//validity
+const obj = {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.popup__submit',
+    disabledButtonSelector: 'popup__submit_status_error',
+    errorInputSelector: 'form__input_status_error',
+    errorClass: '.form__input-error_visible'
+};
+
+
+const enableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
+    submitButtonSelector.classList.remove(disabledButtonSelector)
+    submitButtonSelector.removeAttribute('disabled')
+};
+
+const disableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
+    submitButtonSelector.classList.add(disabledButtonSelector);
+    submitButtonSelector.setAttribute('disabled', 'disabled')
+};
+
+
+function hasInvalidInput (inputs) {
+    return inputs.every((input) => {
+        return input.validity.valid;
+    })
+
+}
+
+function toggleButtonState (inputs, submitButtonSelector, disabledButtonSelector) {
+    if (hasInvalidInput(inputs)) {
+        enableSubmitBtn(submitButtonSelector , disabledButtonSelector)
+    } else {
+        disableSubmitBtn(submitButtonSelector , disabledButtonSelector)
+    }
+}
+
+
+
+
+
+const hideInputError = (inputSelector, errorInputSelector, errorClass) => {
+    const errorPlace = document.getElementById(`${inputSelector.name}-error`)
+    inputSelector.classList.remove(errorInputSelector);
+    errorPlace.classList.remove(errorClass);
+    errorPlace.textContent = '';
+};
+
+const showInputError = (inputSelector, errorInputSelector, errorClass) => {
+    const errorPlace = document.getElementById(`${inputSelector.name}-error`)
+    inputSelector.classList.add(errorInputSelector);
+    errorPlace.textContent = inputSelector.validationMessage;
+    errorPlace.classList.add(errorClass);
+};
+
+const inputIsValid = (inputSelector, errorInputSelector, errorClass) => {
+    if (inputSelector.validity.valid) {
+        hideInputError(inputSelector, errorInputSelector, errorClass)
+    } else {
+        showInputError(inputSelector, errorInputSelector, errorClass)
+    }
+}
+
+
+
+function enableValidation ({formSelector, inputSelector, submitButtonSelector, disabledButtonSelector, errorInputSelector, errorClass}) {
+    const forms = document.querySelectorAll(formSelector)
+    forms.forEach(form => {
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            form.reset()
+        })
+        const inputs = Array.from(form.querySelectorAll(inputSelector))
+        const submitButt = form.querySelector(submitButtonSelector)
+
+        inputs.forEach(input => {
+            input.addEventListener('input', (_) => {
+                toggleButtonState(inputs, submitButt, disabledButtonSelector)
+                inputIsValid(input, errorInputSelector, errorClass)
+            })
+        })
+    })
+}
+
+enableValidation(obj)
+
+
+
+
+

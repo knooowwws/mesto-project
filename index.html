@@ -49,17 +49,13 @@
 			<h2 class="popup__title">Редактировать профиль</h2>
 			<form class="form form_profile" name="popup" novalidate>
 				<fieldset class="form__content">
-					<label>
 						<input class="form__input form__input_name" value="" type="text" name="name" placeholder="Имя" required minlength="2" maxlength="40">
 						<span class="form__input-error" id="name-error"></span>
-					</label>
-					<label>
 						<input class="form__input form__input_profile" value="" type="text" name="profession"
-							placeholder="Деятельность" required minlength="2" maxlength="40">
+							placeholder="Деятельность" required minlength="2" maxlength="200">
 						<span class="form__input-error" id="profession-error"></span>
-					</label>
 				</fieldset>
-				<button class="popup__submit popup__submit_profile opacity" type="submit">Сохранить</button>
+				<button class="popup__submit popup__submit_status_error popup__submit_profile opacity" type="submit" disabled>Сохранить</button>
 			</form>
 		</div>
 	</div>
@@ -70,17 +66,13 @@
 			<h2 class="popup__title">Новое место</h2>
 			<form class="form form_mesto" name="popup" novalidate>
 				<fieldset class="form__content">
-					<label>
-						<input class="form__input form__input_location" value="" type="text" name="location" placeholder="Название" required minlength="2" maxlength="40">
+						<input class="form__input form__input_location" value="" type="text" name="location" placeholder="Название" required minlength="2" maxlength="30">
 						<span class="form__input-error" id="location-error"></span>
-					</label>
-					<label>
 						<input class="form__input form__input_url" value="" type="url" name="url"
-							placeholder="Ссылка на картинку" required minlength="2" maxlength="40">
+							placeholder="Ссылка на картинку" required>
 						<span class="form__input-error" id="url-error"></span>
-					</label>
 				</fieldset>
-				<button class="popup__submit popup__submit_mesto opacity" type="submit">Создать</button>
+				<button class="popup__submit popup__submit_status_error popup__submit_mesto opacity" type="submit" disabled>Создать</button>
 			</form>
 		</div>
 	</div>
