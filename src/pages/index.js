@@ -1,3 +1,9 @@
+import './index.css'
+import  {makeCard, addCards} from "../components/card";
+import {openPopup, closePopup, closePopUpWithEsc, closeAllPopUps, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
+import {enableValidation, disableSubmitBtn, obj} from "../components/validate";
+import {initialCardGenerate} from "../components/utils";
+
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
 const profileWork = profile.querySelector('.profile__work-place');
@@ -29,7 +35,6 @@ const initialCards = [
     }
 ];
 
-const cardTemplate = document.querySelector('.card').content;
 
 const modalProfile = document.querySelector('.popup_profile')
 const inputName = modalProfile.querySelector('.form__input_name');
@@ -41,62 +46,26 @@ const inputLocation = modalAdd.querySelector('.form__input_location');
 const inputUrl = modalAdd.querySelector('.form__input_url');
 
 
-const modalPhoto = document.querySelector('.popup_photo')
 
+//CARDS GENERATE
 
-
-// FUNCTIONS
-const openPopup = (popup) => {
-    popup.classList.add('popup_opened')
-}
-
-const closePopup = (popup) => {
-    popup.classList.remove('popup_opened')
-}
-
-const closeAllPopUps = () => {
-    document.querySelectorAll('.popup__close').forEach(elem => {
-        elem.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup')))
-    })
-}
-closeAllPopUps();
-
-const openModalPhoto = (cardEl) => {
-    modalPhoto.querySelector('.popup__image').src = cardEl.url
-    modalPhoto.querySelector('.popup__name').textContent = cardEl.name
-    openPopup(modalPhoto)
-}
-
-const makeCard = (cardEl) => {
-    const card = cardTemplate.querySelector('.cards__item').cloneNode(true);
-    card.querySelector('.cards__name').textContent = cardEl.name;
-    card.querySelector('.cards__img').src = cardEl.url;
-    card.querySelector('.cards__btn').addEventListener('click', (evt) => {evt.target.classList.toggle('cards__btn_like')})
-    card.querySelector('.cards__trash').addEventListener('click', (evt) => {evt.target.closest('.cards__item').remove()})
-    card.querySelector('.cards__img').addEventListener('click', () => openModalPhoto(cardEl))
-    return card;
-}
-
-const addCards = (cardEl) => {
-    document.querySelector('.cards').prepend(makeCard(cardEl));
-}
-
-const initialCardGenerate = () => {
-    initialCards.forEach(el => {
-        addCards(el)
-    })
-}
-initialCardGenerate();
+initialCardGenerate(initialCards);
 
 
 // CALLBACKS
 // profile
+
+closeAllPopUps();
+document.querySelector('.popup__close').addEventListener('click', closePopup)
+
+//открытие попапа с редактирование профиля
 profileEditButton.addEventListener('click', () => {
     openPopup(modalProfile);
     inputName.value = profileName.textContent;
     inputProfile.value = profileWork.textContent;
 })
 
+//Обработка события форма редактирования профиля
 modalProfile.querySelector('.form_profile').addEventListener('submit', (evt) => {
     evt.preventDefault();
     profileName.textContent = inputName.value;
@@ -105,7 +74,13 @@ modalProfile.querySelector('.form_profile').addEventListener('submit', (evt) => 
 })
 
 // add
-profile.querySelector('.profile__btn-add').addEventListener('click', () => openPopup(modalAdd));
+//Открытие попапа с добавлением места
+profile.querySelector('.profile__btn-add').addEventListener('click', () => {
+    openPopup(modalAdd)
+    disableSubmitBtn(obj.submitButtonSelector, obj.disabledButtonSelector)
+});
+
+
 modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
     evt.preventDefault();
     const cardEl = {
@@ -117,3 +92,14 @@ modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
     inputUrl.value = ''
     closePopup(modalAdd);
 })
+
+
+
+//validity
+
+enableValidation(obj)
+
+
+
+
+

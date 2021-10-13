@@ -2,6 +2,7 @@
 <html lang="ru">
 
 <head>
+	<link rel="stylesheet" type="text/css" href="blocks/form/__input-error/_visible/form__input-error_visible.css"/>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="pages/index.css">
@@ -11,13 +12,13 @@
 <body class="page">
 
 	<header class="header page__item">
-		<a href="#"><img class="header__logo" src="./images/logo.svg" alt="Логотип"></a>
+		<a href="#"><img class="header__logo" src="<%=require("./images/logo.svg")%>" alt="Логотип"></a>
 	</header>
 
 	<main class="content">
 
 		<section class="profile page__item">
-			<img class="profile__avatar" src="./images/face.jpg" alt="Портрет Жака-Ив Кусто">
+			<img class="profile__avatar" src="<%=require("./images/face.jpg")%>" alt="Портрет Жака-Ив Кусто">
 
 			<div class="profile__info">
 				<div class="profile__content">
@@ -46,13 +47,15 @@
 		<div class="popup__container">
 			<button class="popup__close popup__close_profile opacity" aria-label="close" type="button"></button>
 			<h2 class="popup__title">Редактировать профиль</h2>
-			<form class="form form_profile" name="popup">
+			<form class="form form_profile" name="popup" novalidate>
 				<fieldset class="form__content">
-					<input class="form__input form__input_name" value="" type="text" name="name" placeholder="Имя">
-					<input class="form__input form__input_profile" value="" type="text" name="profession"
-						placeholder="Деятельность">
+						<input class="form__input form__input_name" value="" type="text" name="name" placeholder="Имя" required minlength="2" maxlength="40">
+						<span class="form__input-error" id="name-error"></span>
+						<input class="form__input form__input_profile" value="" type="text" name="profession"
+							placeholder="Деятельность" required minlength="2" maxlength="200">
+						<span class="form__input-error" id="profession-error"></span>
 				</fieldset>
-				<button class="popup__submit popup__submit_profile opacity" type="submit">Сохранить</button>
+				<button class="popup__submit popup__submit_status_error popup__submit_profile opacity" type="submit" disabled>Сохранить</button>
 			</form>
 		</div>
 	</div>
@@ -61,13 +64,15 @@
 		<div class="popup__container">
 			<button class="popup__close popup__close_mesto opacity" aria-label="close" type="button"></button>
 			<h2 class="popup__title">Новое место</h2>
-			<form class="form form_mesto" name="popup">
+			<form class="form form_mesto" name="popup" novalidate>
 				<fieldset class="form__content">
-					<input class="form__input form__input_location" value="" type="text" name="name" placeholder="Название">
-					<input class="form__input form__input_url" value="" type="text" name="profession"
-						placeholder="Ссылка на картинку">
+						<input class="form__input form__input_location" value="" type="text" name="location" placeholder="Название" required minlength="2" maxlength="30">
+						<span class="form__input-error" id="location-error"></span>
+						<input class="form__input form__input_url" value="" type="url" name="url"
+							placeholder="Ссылка на картинку" required>
+						<span class="form__input-error" id="url-error"></span>
 				</fieldset>
-				<button class="popup__submit popup__submit_mesto opacity" type="submit">Создать</button>
+				<button class="popup__submit popup__submit_status_error popup__submit_mesto opacity" type="submit" disabled>Создать</button>
 			</form>
 		</div>
 	</div>
@@ -91,7 +96,11 @@
 			<div class="cards__trash opacity"></div>
 		</li>
 	</template>
-	<script rel="script" src="scripts/index.js"></script>
+	<script rel="script" src="pages/index.js"></script>
+	<script rel="script" src="components/card.js"></script>
+	<script rel="script" src="components/modal.js"></script>
+	<script rel="script" src="components/utils.js"></script>
+	<script rel="script" src="components/validate.js"></script>
 </body>
 
 </html>
