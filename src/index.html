@@ -12,13 +12,13 @@
 <body class="page">
 
 	<header class="header page__item">
-		<a href="#"><img class="header__logo" src="./images/logo.svg" alt="Логотип"></a>
+		<a href="#"><img class="header__logo" src="<%=require("./images/logo.svg")%>" alt="Логотип"></a>
 	</header>
 
 	<main class="content">
 
 		<section class="profile page__item">
-			<img class="profile__avatar" src="./images/face.jpg" alt="Портрет Жака-Ив Кусто">
+			<img class="profile__avatar" src="<%=require("./images/face.jpg")%>" alt="Портрет Жака-Ив Кусто">
 
 			<div class="profile__info">
 				<div class="profile__content">
@@ -96,7 +96,11 @@
 			<div class="cards__trash opacity"></div>
 		</li>
 	</template>
-	<script rel="script" src="scripts/index.js"></script>
+	<script rel="script" src="pages/index.js"></script>
+	<script rel="script" src="components/card.js"></script>
+	<script rel="script" src="components/modal.js"></script>
+	<script rel="script" src="components/utils.js"></script>
+	<script rel="script" src="components/validate.js"></script>
 </body>
 
 </html>
