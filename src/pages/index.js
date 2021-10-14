@@ -1,4 +1,4 @@
-import './index.css'
+import './index.css';
 import  {makeCard, addCards} from "../components/card";
 import {openPopup, closePopup, closePopUpWithEsc, closeAllPopUps, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
 import {enableValidation, disableSubmitBtn, obj} from "../components/validate";
@@ -44,6 +44,7 @@ const inputProfile = modalProfile.querySelector('.form__input_profile');
 const modalAdd = document.querySelector('.popup_mesto')
 const inputLocation = modalAdd.querySelector('.form__input_location');
 const inputUrl = modalAdd.querySelector('.form__input_url');
+const modalAddBtn = modalAdd.querySelector('.popup__submit_mesto')
 
 
 
@@ -58,7 +59,7 @@ initialCardGenerate(initialCards);
 closeAllPopUps();
 document.querySelector('.popup__close').addEventListener('click', closePopup)
 
-//открытие попапа с редактирование профиля
+//открытие попапа с редактированием профиля
 profileEditButton.addEventListener('click', () => {
     openPopup(modalProfile);
     inputName.value = profileName.textContent;
@@ -68,10 +69,13 @@ profileEditButton.addEventListener('click', () => {
 //Обработка события форма редактирования профиля
 modalProfile.querySelector('.form_profile').addEventListener('submit', (evt) => {
     evt.preventDefault();
-    profileName.textContent = inputName.value;
-    profileWork.textContent = inputProfile.value;
+    profileName.textContent = inputName.value
+    profileWork.textContent = inputProfile.value
     closePopup(modalProfile)
 })
+
+
+
 
 // add
 //Открытие попапа с добавлением места
@@ -91,6 +95,7 @@ modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
     inputLocation.value = ''
     inputUrl.value = ''
     closePopup(modalAdd);
+    disableSubmitBtn(modalAddBtn, disabledButtonSelector)
 })
 
 
