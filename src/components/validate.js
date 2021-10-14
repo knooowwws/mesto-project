@@ -15,7 +15,7 @@ const enableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
 };
 
 export const disableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
-    submitButtonSelector.classList.add(obj.disabledButtonSelector);
+    submitButtonSelector.classList.add(disabledButtonSelector);
     submitButtonSelector.setAttribute('disabled', 'disabled')
 };
 
@@ -68,7 +68,6 @@ export function enableValidation ({formSelector, inputSelector, submitButtonSele
     forms.forEach(form => {
         form.addEventListener('submit', e => {
             e.preventDefault()
-            form.reset()
         })
         const inputs = Array.from(form.querySelectorAll(inputSelector))
         const submitButt = form.querySelector(submitButtonSelector)
