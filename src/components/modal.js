@@ -28,13 +28,6 @@ export const closePopupWithOverlay = (evt) => {
 }
 
 
-
-export const closeAllPopUps = () => {
-    document.querySelectorAll('.popup__close').forEach(elem => {
-        elem.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup')))
-    })
-}
-
  export const openModalPhoto = (cardEl) => {
     modalPhoto.querySelector('.popup__image').src = cardEl.url
     modalPhoto.querySelector('.popup__name').textContent = cardEl.name

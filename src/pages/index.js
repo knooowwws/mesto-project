@@ -1,6 +1,6 @@
 import './index.css';
 import  {makeCard, addCards} from "../components/card";
-import {openPopup, closePopup, closePopUpWithEsc, closeAllPopUps, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
+import {openPopup, closePopup, closePopUpWithEsc, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
 import {enableValidation, disableSubmitBtn, obj} from "../components/validate";
 import {initialCardGenerate} from "../components/utils";
 
@@ -56,8 +56,10 @@ initialCardGenerate(initialCards);
 // CALLBACKS
 // profile
 
-closeAllPopUps();
-document.querySelector('.popup__close').addEventListener('click', closePopup)
+// closeAllPopUps();
+document.querySelectorAll('.popup__close').forEach(elem => {
+    elem.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup')))
+})
 
 //открытие попапа с редактированием профиля
 profileEditButton.addEventListener('click', () => {
@@ -95,7 +97,7 @@ modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
     inputLocation.value = ''
     inputUrl.value = ''
     closePopup(modalAdd);
-    disableSubmitBtn(modalAddBtn, disabledButtonSelector)
+    disableSubmitBtn(modalAddBtn, obj.disabledButtonSelector)
 })
 
 
