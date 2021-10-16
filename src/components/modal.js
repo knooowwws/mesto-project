@@ -9,8 +9,9 @@ export const openPopup = (popup) => {
 }
 
 export const closePopup = (popup) => {
+    document.removeEventListener('keydown', closePopUpWithEsc)
+    popup.removeEventListener('click', closePopupWithOverlay);
     popup.classList.remove('popup_opened')
-    popup.addEventListener('click', closePopupWithOverlay);
 }
 
 export const closePopUpWithEsc = (evt) => {
@@ -30,6 +31,7 @@ export const closePopupWithOverlay = (evt) => {
 
  export const openModalPhoto = (cardEl) => {
     modalPhoto.querySelector('.popup__image').src = cardEl.url
+    modalPhoto.querySelector('.popup__image').alt = cardEl.name
     modalPhoto.querySelector('.popup__name').textContent = cardEl.name
     openPopup(modalPhoto)
 }

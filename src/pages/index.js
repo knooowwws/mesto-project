@@ -1,7 +1,7 @@
 import './index.css';
 import  {makeCard, addCards} from "../components/card";
 import {openPopup, closePopup, closePopUpWithEsc, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
-import {enableValidation, disableSubmitBtn, obj} from "../components/validate";
+import {enableValidation, disableSubmitBtn, arrForValidation} from "../components/validate";
 import {initialCardGenerate} from "../components/utils";
 
 const profile = document.querySelector('.profile');
@@ -83,7 +83,7 @@ modalProfile.querySelector('.form_profile').addEventListener('submit', (evt) => 
 //Открытие попапа с добавлением места
 profile.querySelector('.profile__btn-add').addEventListener('click', () => {
     openPopup(modalAdd)
-    disableSubmitBtn(obj.submitButtonSelector, obj.disabledButtonSelector)
+    disableSubmitBtn(arrForValidation.submitButtonSelector, arrForValidation.disabledButtonSelector)
 });
 
 
@@ -97,14 +97,14 @@ modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
     inputLocation.value = ''
     inputUrl.value = ''
     closePopup(modalAdd);
-    disableSubmitBtn(modalAddBtn, obj.disabledButtonSelector)
+    disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
 })
 
 
 
 //validity
 
-enableValidation(obj)
+enableValidation(arrForValidation)
 
 
 
