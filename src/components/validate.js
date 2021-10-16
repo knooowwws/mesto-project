@@ -1,5 +1,5 @@
 //validity
-export const obj = {
+export const arrForValidation = {
     formSelector: '.form',
     inputSelector: '.form__input',
     submitButtonSelector: '.popup__submit',
@@ -81,4 +81,4 @@ export function enableValidation ({formSelector, inputSelector, submitButtonSele
     })
 }
 
-enableValidation(obj)
+enableValidation(arrForValidation)
