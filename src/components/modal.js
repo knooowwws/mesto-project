@@ -1,4 +1,13 @@
 //POPUPS
+import {
+    arrForValidation,
+    disableSubmitBtn,
+    enableSubmitBtn,
+    enableValidation,
+    hasInvalidInput,
+    inputIsValid, toggleButtonState
+} from "./validate";
+
 export const modalPhoto = document.querySelector('.popup_photo')
 
 
@@ -6,6 +15,20 @@ export const openPopup = (popup) => {
     popup.classList.add('popup_opened')
     document.addEventListener('keydown', closePopUpWithEsc)
     popup.addEventListener('click', closePopupWithOverlay);
+    const inputList = Array.from(popup.querySelectorAll(arrForValidation.inputSelector))
+    const btnEl = popup.querySelector(arrForValidation.submitButtonSelector)
+
+    if (inputList) {
+        inputList.forEach((inputEl) => {
+            if (inputEl.value) {
+                inputIsValid(popup.querySelector(arrForValidation.inputSelector), popup.querySelector(arrForValidation.errorInputSelector), popup.querySelector(arrForValidation.errorClass));
+            }
+        });
+    }
+
+    if (btnEl) {
+        toggleButtonState(inputList, popup.querySelector(arrForValidation.submitButtonSelector), popup.querySelector(arrForValidation.disabledButtonSelector));
+    }
 }
 
 export const closePopup = (popup) => {
@@ -30,7 +53,7 @@ export const closePopupWithOverlay = (evt) => {
 
 
  export const openModalPhoto = (cardEl) => {
-    modalPhoto.querySelector('.popup__image').src = cardEl.url
+    modalPhoto.querySelector('.popup__image').src = cardEl.link
     modalPhoto.querySelector('.popup__image').alt = cardEl.name
     modalPhoto.querySelector('.popup__name').textContent = cardEl.name
     openPopup(modalPhoto)

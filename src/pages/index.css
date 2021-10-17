@@ -32,9 +32,12 @@
 @import url('../blocks/cards/__img/cards__img.css');
 @import url('../blocks/cards/__cont/cards__cont.css');
 @import url('../blocks/cards/__name/cards__name.css');
+@import url('../blocks/cards/__like-block/cards__like-block.css');
+@import url('../blocks/cards/__like-counter/cards__like-counter.css');
 @import url('../blocks/cards/__btn/cards__btn.css');
 @import url('../blocks/cards/__btn/_like/cards__btn_like.css');
 @import url('../blocks/cards/__trash/cards__trash.css');
+@import url('../blocks/cards/__trash/_status/cards__trash_status_visible.css');
 
 /* footer */
 @import url('../blocks/footer/footer.css');
