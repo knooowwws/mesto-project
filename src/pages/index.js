@@ -1,57 +1,30 @@
 import './index.css';
-import  {makeCard, addCards} from "../components/card";
+import {makeCard, addCards, getArrayCards, userId, getUserId, addNewUserCard} from "../components/card";
 import {openPopup, closePopup, closePopUpWithEsc, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
 import {enableValidation, disableSubmitBtn, arrForValidation} from "../components/validate";
 import {initialCardGenerate} from "../components/utils";
+import {getUserProfile, saveProfileAva, saveProfileAvatar} from "../components/api";
+import {handlerProfileFormSubmit, renderUserProfile, updateAva} from "../components/profile";
 
 const profile = document.querySelector('.profile');
-const profileName = profile.querySelector('.profile__name');
-const profileWork = profile.querySelector('.profile__work-place');
+export const profileName = profile.querySelector('.profile__name');
+export const profileWork = profile.querySelector('.profile__work-place');
 const profileEditButton = profile.querySelector('.profile__btn-edit');
-const initialCards = [
-    {
-        name: 'Бали',
-        url: 'https://images.unsplash.com/photo-1599459657946-43a884745e2a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8JUQwJUIxJUQwJUIwJUQwJUJCJUQwJUI4fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60'
-    },
-    {
-        name: 'Паттайя',
-        url: 'https://images.unsplash.com/photo-1599851245208-c1e43c053710?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGF0dGF5YXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60'
-    },
-    {
-        name: 'Астрахань',
-        url: 'https://images.unsplash.com/photo-1598005532665-fe6b80edba55?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1866&q=80'
-    },
-    {
-        name: 'Дагестан',
-        url: 'https://images.unsplash.com/photo-1617911478288-ac9559802681?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZGFnZXN0YW58ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60'
-    },
-    {
-        name: 'Холмогорский район',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+export const profileAvatar = profile.querySelector('.profile__avatar')
 
+export const modalProfile = document.querySelector('.popup_profile')
+export const inputName = modalProfile.querySelector('.form__input_name');
+export const inputProfile = modalProfile.querySelector('.form__input_profile');
 
-const modalProfile = document.querySelector('.popup_profile')
-const inputName = modalProfile.querySelector('.form__input_name');
-const inputProfile = modalProfile.querySelector('.form__input_profile');
+export const modalAvatar = document.querySelector('.popup_avatar')
+export const formAvatar = modalAvatar.querySelector('.form_avatar')
+export const inputAvatar = formAvatar.querySelector('.form__input_avatar')
 
-
-const modalAdd = document.querySelector('.popup_mesto')
-const inputLocation = modalAdd.querySelector('.form__input_location');
-const inputUrl = modalAdd.querySelector('.form__input_url');
-const modalAddBtn = modalAdd.querySelector('.popup__submit_mesto')
-
-
-
-//CARDS GENERATE
-
-initialCardGenerate(initialCards);
-
+export const modalAdd = document.querySelector('.popup_mesto')
+export const formMesto = modalAdd.querySelector('.form_mesto')
+export const inputLocation = modalAdd.querySelector('.form__input_location');
+export const inputUrl = modalAdd.querySelector('.form__input_url');
+export const modalAddBtn = modalAdd.querySelector('.popup__submit_mesto')
 
 // CALLBACKS
 // profile
@@ -70,37 +43,35 @@ profileEditButton.addEventListener('click', () => {
 
 //Обработка события форма редактирования профиля
 modalProfile.querySelector('.form_profile').addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    profileName.textContent = inputName.value
-    profileWork.textContent = inputProfile.value
-    closePopup(modalProfile)
+ handlerProfileFormSubmit()
 })
 
+//открытие попапа редактирования авы
+profileAvatar.addEventListener('click', () => openPopup(modalAvatar))
 
-
+formAvatar.addEventListener('submit', () => {
+    updateAva()
+})
 
 // add
 //Открытие попапа с добавлением места
 profile.querySelector('.profile__btn-add').addEventListener('click', () => {
     openPopup(modalAdd)
-    disableSubmitBtn(arrForValidation.submitButtonSelector, arrForValidation.disabledButtonSelector)
+    disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
 });
 
 
-modalAdd.querySelector('.form_mesto').addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const cardEl = {
-        name: inputLocation.value,
-        url: inputUrl.value
-    }
-    addCards(cardEl);
-    inputLocation.value = ''
-    inputUrl.value = ''
-    closePopup(modalAdd);
-    disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
+formMesto.addEventListener('submit', (evt) => {
+    addNewUserCard()
+    // disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
+    // debugger
 })
 
 
+renderUserProfile()
+
+// getUserProfile().then(r => console.log(r))
+getArrayCards()
 
 //validity
 

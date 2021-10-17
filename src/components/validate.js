@@ -9,7 +9,7 @@ export const arrForValidation = {
 };
 
 
-const enableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
+export const enableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
     submitButtonSelector.classList.remove(disabledButtonSelector)
     submitButtonSelector.removeAttribute('disabled')
 };
@@ -17,17 +17,18 @@ const enableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
 export const disableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
     document.querySelector('.popup__submit').classList.add(disabledButtonSelector);
     document.querySelector('.popup__submit').setAttribute('disabled', 'disabled')
+    debugger
 };
 
 
-function hasInvalidInput (inputs) {
+export function hasInvalidInput (inputs) {
     return inputs.every((input) => {
         return input.validity.valid;
     })
 
 }
 
-function toggleButtonState (inputs, submitButtonSelector, disabledButtonSelector) {
+export function toggleButtonState (inputs, submitButtonSelector, disabledButtonSelector) {
     if (hasInvalidInput(inputs)) {
         enableSubmitBtn(submitButtonSelector , disabledButtonSelector)
     } else {
@@ -53,7 +54,7 @@ const showInputError = (inputSelector, errorInputSelector, errorClass) => {
     errorPlace.classList.add(errorClass);
 };
 
-const inputIsValid = (inputSelector, errorInputSelector, errorClass) => {
+export const inputIsValid = (inputSelector, errorInputSelector, errorClass) => {
     if (inputSelector.validity.valid) {
         hideInputError(inputSelector, errorInputSelector, errorClass)
     } else {
