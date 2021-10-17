@@ -98,22 +98,6 @@ export const toggleLikeCard = (evt, cardEl) => {
     }
 }
 
-// Установить лайк
-export function putLike(cardId) {
-    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-        method: 'PUT',
-        headers: config.headers
-    })
-
-}
-
-// Cнять лайк
-export function deleteLike(cardId) {
-    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-        method: 'DELETE',
-        headers: config.headers
-    })
-}
 
 export const deleteCard = (cardId) => {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
@@ -127,7 +111,6 @@ export function loadRender(isLoading) {
     const activeSaveBtn = popupActive.querySelector('.popup__submit');
     if (isLoading) {
         activeSaveBtn.textContent = 'Сохранение...';
-        debugger
     } else {
         activeSaveBtn.textContent = 'Создать';
     }

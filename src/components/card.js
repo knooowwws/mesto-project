@@ -21,6 +21,14 @@ export const makeCard = (cardEl) => {
             deleteCard(cardId)
         })
     }
+
+    if (cardEl.likes) {
+        cardEl.likes.forEach(el => {
+            if (el._id === userId) {
+                card.querySelector('.cards__btn').classList.add('cards__btn_like')
+            }
+        })
+    }
     // card.querySelector('.cards__trash').addEventListener('click', (evt) => {evt.target.closest('.cards__item').remove()})
     card.querySelector('.cards__like-counter').textContent = cardEl.likes.length;
     return card;
