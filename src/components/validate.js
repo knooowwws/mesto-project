@@ -17,7 +17,6 @@ export const enableSubmitBtn = (submitButtonSelector, disabledButtonSelector) =>
 export const disableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
     document.querySelector('.popup__submit').classList.add(disabledButtonSelector);
     document.querySelector('.popup__submit').setAttribute('disabled', 'disabled')
-    debugger
 };
 
 

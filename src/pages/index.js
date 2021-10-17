@@ -63,8 +63,7 @@ profile.querySelector('.profile__btn-add').addEventListener('click', () => {
 
 formMesto.addEventListener('submit', (evt) => {
     addNewUserCard()
-    // disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
-    // debugger
+    disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
 })
 
 
