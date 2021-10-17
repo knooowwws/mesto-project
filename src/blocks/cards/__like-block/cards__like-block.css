@@ -1,0 +1,9 @@
+.cards__like-block {
+    grid-column: 3/4;
+    grid-row: 2/3;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    gap: 3px;
+}
