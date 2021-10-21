@@ -1,4 +1,4 @@
-import {getResponse, getUserProfile, loadRender, saveProfileAvatar, saveProfileData} from "./api";
+import {getResponse, getUserProfile, saveProfileAvatar, saveProfileData} from "./api";
 import {
     inputAvatar,
     inputName,
@@ -9,41 +9,33 @@ import {
     profileWork
 } from "../pages/index";
 import {closePopup} from "./modal";
+import {loadRender} from "./utils";
 
-export const renderUserProfile = () => {
-    getUserProfile()
-        .then(res => getResponse(res))
-        .then(res => {
-            profileName.textContent = res.name
-            profileWork.textContent = res.about
-            profileAvatar.src = res.avatar
-            console.log(res._id)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+export const renderUserProfile = (name, about, avatar) => {
+
+            profileName.textContent = name
+            profileWork.textContent = about
+            profileAvatar.src = avatar
 }
 
 export function handlerProfileFormSubmit() {
+    loadRender(modalProfile, true)
     saveProfileData(inputName.value, inputProfile.value)
-        .then(res => getResponse(res))
         .then((res) => {
-            loadRender(true)
             profileName.textContent = res.name;
             profileWork.textContent = res.about;
-            loadRender(false)
             closePopup(modalProfile);
         })
         .catch((err) => {
             console.log(err);
         })
         .finally(() => {
+            loadRender(modalProfile, false)
         })
 }
 
 export function updateAva () {
     saveProfileAvatar(inputAvatar.value)
-        .then(res => getResponse(res))
         .then(res => {
             loadRender(true)
             profileAvatar.src = res.avatar

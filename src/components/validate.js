@@ -2,24 +2,24 @@
 export const arrForValidation = {
     formSelector: '.form',
     inputSelector: '.form__input',
-    submitButtonSelector: '.popup__submit',
+    submitButton: '.popup__submit',
     disabledButtonSelector: 'popup__submit_status_error',
     errorInputSelector: 'form__input_status_error',
     errorClass: '.form__input-error_visible'
 };
 
 
-export const enableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
-    submitButtonSelector.classList.remove(disabledButtonSelector)
-    submitButtonSelector.removeAttribute('disabled')
+export const enableSubmitBtn = (submitButton, disabledButtonSelector) => {
+    submitButton.classList.remove(disabledButtonSelector)
+    submitButton.removeAttribute('disabled')
 };
 
-export const disableSubmitBtn = (submitButtonSelector, disabledButtonSelector) => {
-    document.querySelector('.popup__submit').classList.add(disabledButtonSelector);
-    document.querySelector('.popup__submit').setAttribute('disabled', 'disabled')
-};
+export const disableSubmitBtn = (submitButton, disabledButtonSelector) => {
+    submitButton.classList.add(disabledButtonSelector);
+    submitButton.setAttribute('disabled', 'disabled')
+};`
 
-
+`
 export function hasInvalidInput (inputs) {
     return inputs.every((input) => {
         return input.validity.valid;
@@ -27,11 +27,11 @@ export function hasInvalidInput (inputs) {
 
 }
 
-export function toggleButtonState (inputs, submitButtonSelector, disabledButtonSelector) {
+export function toggleButtonState (inputs, submitButton, disabledButtonSelector) {
     if (hasInvalidInput(inputs)) {
-        enableSubmitBtn(submitButtonSelector , disabledButtonSelector)
+        enableSubmitBtn(submitButton , disabledButtonSelector)
     } else {
-        disableSubmitBtn(submitButtonSelector , disabledButtonSelector)
+        disableSubmitBtn(submitButton , disabledButtonSelector)
     }
 }
 
@@ -63,14 +63,14 @@ export const inputIsValid = (inputSelector, errorInputSelector, errorClass) => {
 
 
 
-export function enableValidation ({formSelector, inputSelector, submitButtonSelector, disabledButtonSelector, errorInputSelector, errorClass}) {
+export function enableValidation ({formSelector, inputSelector, submitButton, disabledButtonSelector, errorInputSelector, errorClass}) {
     const forms = document.querySelectorAll(formSelector)
     forms.forEach(form => {
         form.addEventListener('submit', e => {
             e.preventDefault()
         })
         const inputs = Array.from(form.querySelectorAll(inputSelector))
-        const submitButt = form.querySelector(submitButtonSelector)
+        const submitButt = form.querySelector(submitButton)
 
         inputs.forEach(input => {
             input.addEventListener('input', (_) => {
@@ -81,4 +81,3 @@ export function enableValidation ({formSelector, inputSelector, submitButtonSele
     })
 }
 
-enableValidation(arrForValidation)

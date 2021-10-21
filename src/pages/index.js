@@ -1,9 +1,9 @@
 import './index.css';
-import {makeCard, addCards, getArrayCards, userId, getUserId, addNewUserCard} from "../components/card";
+import {addInitialCards, makeCard, addCards, getId, getArrayCards, userId, getUserId, addNewUserCard} from "../components/card";
 import {openPopup, closePopup, closePopUpWithEsc, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
 import {enableValidation, disableSubmitBtn, arrForValidation} from "../components/validate";
-import {initialCardGenerate} from "../components/utils";
-import {getUserProfile, saveProfileAva, saveProfileAvatar} from "../components/api";
+// import {initialCardGenerate} from "../components/utils";
+import {getInitialCards, getUserProfile, saveProfileAva, saveProfileAvatar} from "../components/api";
 import {handlerProfileFormSubmit, renderUserProfile, updateAva} from "../components/profile";
 
 const profile = document.querySelector('.profile');
@@ -66,11 +66,14 @@ formMesto.addEventListener('submit', (evt) => {
     disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
 })
 
+//рендер информации о пользователе и карточек с сервера
+Promise.all([getUserProfile(), getInitialCards()]).then(r => {
+    // console.log(r)
+    getId(r[0]._id)
+    renderUserProfile(r[0].name, r[0].about, r[0].avatar)
+    addInitialCards(r[1])
+})
 
-renderUserProfile()
-
-// getUserProfile().then(r => console.log(r))
-getArrayCards()
 
 //validity
 

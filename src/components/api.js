@@ -19,7 +19,7 @@ export const getInitialCards = () => {
         headers: {
             authorization: `${config.headers.authorization}`
         }
-    })
+    }).then(r => getResponse(r))
 }
 
 // Запрос юзера
@@ -29,7 +29,7 @@ export const getUserProfile = () => {
         headers: {
             authorization: `${config.headers.authorization}`
         }
-    })
+    }).then(r => getResponse(r))
 }
 
 // Редактирование данных пользователя на сервере
@@ -44,7 +44,7 @@ export const saveProfileData = (name, about) => {
             name: name,
             about: about
         })
-    })
+    }).then(r => getResponse(r))
 
 }
 
@@ -59,7 +59,7 @@ export const saveProfileAvatar = (avatar) => {
         body: JSON.stringify({
             avatar: avatar
         })
-    })
+    }).then(r => getResponse(r))
 }
 
 // Добавление карточки на сервер
@@ -74,7 +74,7 @@ export const addNewCard = (name, link) => {
             name: name,
             link: link
         })
-    })
+    }).then(r => getResponse(r))
 }
 
 // Запрос на снятие и установку лайка карточки
@@ -86,7 +86,7 @@ export const toggleLikeCard = (evt, cardEl) => {
                 authorization: `${config.headers.authorization}`,
                 'Content-Type': 'application/json'
             },
-        })
+        }).then(r => getResponse(r))
     } else {
         return fetch(`${config.baseUrl}/cards/likes/${cardEl._id}`, {
             method: 'PUT',
@@ -94,7 +94,7 @@ export const toggleLikeCard = (evt, cardEl) => {
                 authorization: `${config.headers.authorization}`,
                 'Content-Type': 'application/json'
             }
-        })
+        }).then(r => getResponse(r))
     }
 }
 
@@ -103,15 +103,6 @@ export const deleteCard = (cardId) => {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
         method: "DELETE",
         headers: config.headers,
-    })
+    }).then(r => getResponse(r))
 }
 
-export function loadRender(isLoading) {
-    const popupActive = document.querySelector('.popup_opened');
-    const activeSaveBtn = popupActive.querySelector('.popup__submit');
-    if (isLoading) {
-        activeSaveBtn.textContent = 'Сохранение...';
-    } else {
-        activeSaveBtn.textContent = 'Создать';
-    }
-}

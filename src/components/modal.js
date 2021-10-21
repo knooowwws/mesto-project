@@ -15,20 +15,6 @@ export const openPopup = (popup) => {
     popup.classList.add('popup_opened')
     document.addEventListener('keydown', closePopUpWithEsc)
     popup.addEventListener('click', closePopupWithOverlay);
-    const inputList = Array.from(popup.querySelectorAll(arrForValidation.inputSelector))
-    const btnEl = popup.querySelector(arrForValidation.submitButtonSelector)
-
-    if (inputList) {
-        inputList.forEach((inputEl) => {
-            if (inputEl.value) {
-                inputIsValid(popup.querySelector(arrForValidation.inputSelector), popup.querySelector(arrForValidation.errorInputSelector), popup.querySelector(arrForValidation.errorClass));
-            }
-        });
-    }
-
-    if (btnEl) {
-        toggleButtonState(inputList, popup.querySelector(arrForValidation.submitButtonSelector), popup.querySelector(arrForValidation.disabledButtonSelector));
-    }
 }
 
 export const closePopup = (popup) => {
@@ -46,7 +32,7 @@ export const closePopUpWithEsc = (evt) => {
 
 export const closePopupWithOverlay = (evt) => {
     if (evt.target.classList.contains('popup')) {
-        const popup = document.querySelector(".popup_opened")
+        const popup = evt.target.closest('.popup')
         closePopup(popup);
     }
 }
