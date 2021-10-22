@@ -57,7 +57,7 @@ formAvatar.addEventListener('submit', () => {
 //Открытие попапа с добавлением места
 profile.querySelector('.profile__btn-add').addEventListener('click', () => {
     openPopup(modalAdd)
-    disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
+    // disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
 });
 
 

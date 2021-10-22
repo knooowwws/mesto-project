@@ -81,19 +81,19 @@ export const addNewCard = (name, link) => {
 export const toggleLikeCard = (evt, cardEl) => {
     if (!evt.target.classList.contains('cards__btn_like')) {
         return fetch(`${config.baseUrl}/cards/likes/${cardEl._id}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `${config.headers.authorization}`,
-                'Content-Type': 'application/json'
-            },
-        }).then(r => getResponse(r))
-    } else {
-        return fetch(`${config.baseUrl}/cards/likes/${cardEl._id}`, {
             method: 'PUT',
             headers: {
                 authorization: `${config.headers.authorization}`,
                 'Content-Type': 'application/json'
             }
+        }).then(r => getResponse(r))
+    } else {
+        return fetch(`${config.baseUrl}/cards/likes/${cardEl._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `${config.headers.authorization}`,
+                'Content-Type': 'application/json'
+            },
         }).then(r => getResponse(r))
     }
 }

@@ -17,10 +17,10 @@ export const makeCard = (cardEl) => {
     card.querySelector('.cards__img').src = cardEl.link;
     card.querySelector('.cards__img').alt = cardEl.name;
     card.querySelector('.cards__btn').addEventListener('click', (evt) => {
-        evt.target.classList.toggle('cards__btn_like');
         toggleLikeCard(evt, cardEl)
             .then((res) => {
                 evt.target.parentNode.querySelector('.cards__like-counter').textContent = res.likes.length;
+                evt.target.classList.toggle('cards__btn_like');
             })
             .catch((err) => {
                 console.log(err);
