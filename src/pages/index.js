@@ -67,12 +67,14 @@ formMesto.addEventListener('submit', (evt) => {
 })
 
 //рендер информации о пользователе и карточек с сервера
-Promise.all([getUserProfile(), getInitialCards()]).then(r => {
-    // console.log(r)
-    getId(r[0]._id)
-    renderUserProfile(r[0].name, r[0].about, r[0].avatar)
-    addInitialCards(r[1])
+Promise.all([getUserProfile(), getInitialCards()]).then(([userData, cards]) => {
+    getId(userData._id)
+    renderUserProfile(userData.name, userData.about, userData.avatar)
+    addInitialCards(cards)
 })
+    .catch(res => {
+        console.log(res)
+    })
 
 
 //validity

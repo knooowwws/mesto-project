@@ -35,12 +35,14 @@ export function handlerProfileFormSubmit() {
 }
 
 export function updateAva () {
+    loadRender(modalAvatar, true)
     saveProfileAvatar(inputAvatar.value)
         .then(res => {
-            loadRender(true)
             profileAvatar.src = res.avatar
-            loadRender(false)
             closePopup(modalAvatar)
         })
         .catch(res => console.log(res))
+        .finally(res => {
+            loadRender(modalAvatar, false)
+        })
 }

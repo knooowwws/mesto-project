@@ -17,7 +17,14 @@ export const makeCard = (cardEl) => {
     card.querySelector('.cards__img').src = cardEl.link;
     card.querySelector('.cards__img').alt = cardEl.name;
     card.querySelector('.cards__btn').addEventListener('click', (evt) => {
-        likeCard(evt, cardEl)
+        evt.target.classList.toggle('cards__btn_like');
+        toggleLikeCard(evt, cardEl)
+            .then((res) => {
+                evt.target.parentNode.querySelector('.cards__like-counter').textContent = res.likes.length;
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     })
     card.querySelector('.cards__img').addEventListener('click', () => openModalPhoto(cardEl))
     if (cardEl.owner._id === userId) {
@@ -26,6 +33,9 @@ export const makeCard = (cardEl) => {
             deleteCard(cardId)
                 .then(r => {
                     evt.target.closest('.cards__item').remove()
+                })
+                .catch(res => {
+                    console.log(res)
                 })
         })
     }
@@ -68,14 +78,17 @@ export function addNewUserCard() {
         })
 }
 
-function likeCard (evt, cardEl) {
-    toggleLikeCard(evt, cardEl)
-        .then((res) => {
-            evt.target.classList.toggle('cards__btn_like');
-            evt.target.parentNode.querySelector('.cards__like-counter').textContent = res.likes.length;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
+// function likeCard (evt, cardEl) {
+//     toggleLikeCard(evt, cardEl)
+//         .then((res) => {
+//             evt.target.parentNode.querySelector('.cards__like-counter').textContent = res.likes.length;
+//         })
+//         .then(res => {
+//             evt.target.classList.toggle('cards__btn_like');
+//
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// }
 
