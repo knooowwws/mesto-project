@@ -1,7 +1,7 @@
 import './index.css';
 import {addInitialCards, makeCard, addCards, getId, getArrayCards, userId, getUserId, addNewUserCard} from "../components/card";
 import {openPopup, closePopup, closePopUpWithEsc, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
-import {enableValidation, disableSubmitBtn, arrForValidation} from "../components/validate";
+import {enableValidation, arrForValidation} from "../components/validate";
 // import {initialCardGenerate} from "../components/utils";
 import {getInitialCards, getUserProfile, saveProfileAva, saveProfileAvatar} from "../components/api";
 import {handlerProfileFormSubmit, renderUserProfile, updateAva} from "../components/profile";
@@ -57,13 +57,11 @@ formAvatar.addEventListener('submit', () => {
 //Открытие попапа с добавлением места
 profile.querySelector('.profile__btn-add').addEventListener('click', () => {
     openPopup(modalAdd)
-    // disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
 });
 
 
 formMesto.addEventListener('submit', (evt) => {
     addNewUserCard()
-    disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
 })
 
 //рендер информации о пользователе и карточек с сервера
