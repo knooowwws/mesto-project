@@ -1,101 +1,108 @@
-
-export const getResponse = (res) => {
-    if (res.ok) {
-        return res.json();
+export class Api {
+    constructor({url , token}) {
+        this._url = url;
+        this._token = token;
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
-}
-
-// Запрос объекта с карточками
-export const getInitialCards = () => {
-    return fetch(`${config.baseUrl}/cards`, {
-        headers: {
-            authorization: `${config.headers.authorization}`
+    _getResponse = (res) => {
+        if (res.ok) {
+            return res.json();
         }
-    }).then(r => getResponse(r))
-}
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
 
-// Запрос юзера
-export const getUserProfile = () => {
-    return fetch(`${config.baseUrl}/users/me`, {
-        method: 'GET',
-        headers: {
-            authorization: `${config.headers.authorization}`
-        }
-    }).then(r => getResponse(r))
-}
-
-// Редактирование данных пользователя на сервере
-export const saveProfileData = (name, about) => {
-    return fetch(`${config.baseUrl}/users/me`, {
-        method: 'PATCH',
-        headers: {
-            authorization: `${config.headers.authorization}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: name,
-            about: about
-        })
-    }).then(r => getResponse(r))
-
-}
-
-// Редактирование аватара пользователя
-export const saveProfileAvatar = (avatar) => {
-    return fetch(`${config.baseUrl}/users/me/avatar`, {
-        method: 'PATCH',
-        headers: {
-            authorization: `${config.headers.authorization}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            avatar: avatar
-        })
-    }).then(r => getResponse(r))
-}
-
-// Добавление карточки на сервер
-export const addNewCard = (name, link) => {
-    return fetch(`${config.baseUrl}/cards`, {
-        method: 'POST',
-        headers: {
-            authorization: `${config.headers.authorization}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: name,
-            link: link
-        })
-    }).then(r => getResponse(r))
-}
-
-// Запрос на снятие и установку лайка карточки
-export const toggleLikeCard = (evt, cardEl) => {
-    if (!evt.target.classList.contains('cards__btn_like')) {
-        return fetch(`${config.baseUrl}/cards/likes/${cardEl._id}`, {
-            method: 'PUT',
+    getInitialCards = () => {
+        return fetch(`${this._url}/cards`, {
             headers: {
-                authorization: `${config.headers.authorization}`,
-                'Content-Type': 'application/json'
+                authorization: `${this._token}`
             }
-        }).then(r => getResponse(r))
-    } else {
-        return fetch(`${config.baseUrl}/cards/likes/${cardEl._id}`, {
-            method: 'DELETE',
+        })
+    }
+
+    getUserProfile = () => {
+        return fetch(`${this._url}/users/me`, {
+            method: 'GET',
             headers: {
-                authorization: `${config.headers.authorization}`,
+                authorization: `${this._token}`
+            }
+        })
+    }
+
+    saveProfileData = (name, about) => {
+        return fetch(`${this._url}/users/me`, {
+            method: 'PATCH',
+            headers: {
+                authorization: `${this._token}`,
                 'Content-Type': 'application/json'
             },
-        }).then(r => getResponse(r))
+            body: JSON.stringify({
+                name: name,
+                about: about
+            })
+        })
+
+    }
+
+    saveProfileAvatar = (avatar) => {
+        return fetch(`${this._url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+                authorization: `${this._token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: avatar
+            })
+        })
+    }
+
+    addNewCard = (name, link) => {
+        return fetch(`${this._url}/cards`, {
+            method: 'POST',
+            headers: {
+                authorization: `${this._token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                link: link
+            })
+        })
+    }
+
+    toggleLikeCard = (evt, cardEl) => {
+        if (!evt.target.classList.contains('cards__btn_like')) {
+            return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `${this._token}`,
+                    'Content-Type': 'application/json'
+                },
+            })
+        } else {
+            return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
+                method: 'PUT',
+                headers: {
+                    authorization: `${this._token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+        }
+    }
+
+    deleteCard = (cardId) => {
+        return fetch(`${this._url}/cards/${cardId}`, {
+            method: "DELETE",
+            headers: config.headers,
+        })
+    }
+
+    loadRender(isLoading) {
+        const popupActive = document.querySelector('.popup_opened');
+        const activeSaveBtn = popupActive.querySelector('.popup__submit');
+        if (isLoading) {
+            activeSaveBtn.textContent = 'Сохранение...';
+        } else {
+            activeSaveBtn.textContent = 'Создать';
+        }
     }
 }
-
-
-export const deleteCard = (cardId) => {
-    return fetch(`${config.baseUrl}/cards/${cardId}`, {
-        method: "DELETE",
-        headers: config.headers,
-    }).then(r => getResponse(r))
-}
-
