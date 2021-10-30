@@ -8,35 +8,44 @@ import {
     inputIsValid, toggleButtonState
 } from "./validate";
 
-export const modalPhoto = document.querySelector('.popup_photo')
 
+export default class PopUp {
+    constructor(selectorPopUp) {
+        this.popup = document.querySelector(selectorPopUp)
+        this.allCloseButton = document.querySelectorAll('.popup__close')
+    }
 
-export const openPopup = (popup) => {
-    popup.classList.add('popup_opened')
-    document.addEventListener('keydown', closePopUpWithEsc)
-    popup.addEventListener('click', closePopupWithOverlay);
-}
+    openPopup = (popup) => {
+        this.popup.classList.add('popup_opened')
+        document.addEventListener('keydown', this.closePopUpWithEsc)
+        this.popup.addEventListener('click', this.closePopupWithOverlay);
+    }
 
-export const closePopup = (popup) => {
-    document.removeEventListener('keydown', closePopUpWithEsc)
-    popup.removeEventListener('click', closePopupWithOverlay);
-    popup.classList.remove('popup_opened')
-}
+    ClosePopUpWithButton() {
+        this.allCloseButton.forEach(elem => {
+            elem.addEventListener('click', (evt) => this.closePopup(evt.target.closest('.popup')))
+        })
+    }
 
-export const closePopUpWithEsc = (evt) => {
-    if (evt.key === "Escape") {
-        const popup = document.querySelector(".popup_opened")
-        closePopup(popup);
+    closePopup = (popup) => {
+        document.removeEventListener('keydown', this.closePopUpWithEsc)
+        this.popup.removeEventListener('click', this.closePopupWithOverlay);
+        this.popup.classList.remove('popup_opened')
+    }
+
+    closePopUpWithEsc = (evt) => {
+        if (evt.key === "Escape") {
+            this.closePopup(document.querySelector(".popup_opened"));
+        }
+    }
+
+    closePopupWithOverlay = (evt) => {
+        if (evt.target.classList.contains('popup')) {
+            const popup = evt.target.closest('.popup')
+            this.closePopup(popup);
+        }
     }
 }
-
-export const closePopupWithOverlay = (evt) => {
-    if (evt.target.classList.contains('popup')) {
-        const popup = evt.target.closest('.popup')
-        closePopup(popup);
-    }
-}
-
 
  export const openModalPhoto = (cardEl) => {
     modalPhoto.querySelector('.popup__image').src = cardEl.link
