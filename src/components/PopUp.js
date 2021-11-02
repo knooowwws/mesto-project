@@ -15,7 +15,7 @@ export default class PopUp {
         this.allCloseButton = document.querySelectorAll('.popup__close')
     }
 
-    openPopup = (popup) => {
+    open(popup) {
         this.popup.classList.add('popup_opened')
         document.addEventListener('keydown', this.closePopUpWithEsc)
         this.popup.addEventListener('click', this.closePopupWithOverlay);
@@ -23,11 +23,11 @@ export default class PopUp {
 
     ClosePopUpWithButton() {
         this.allCloseButton.forEach(elem => {
-            elem.addEventListener('click', (evt) => this.closePopup(evt.target.closest('.popup')))
+            elem.addEventListener('click', (evt) => this.close(evt.target.closest('.popup')))
         })
     }
 
-    closePopup = (popup) => {
+    close = (popup) => {
         document.removeEventListener('keydown', this.closePopUpWithEsc)
         this.popup.removeEventListener('click', this.closePopupWithOverlay);
         this.popup.classList.remove('popup_opened')
@@ -35,21 +35,25 @@ export default class PopUp {
 
     closePopUpWithEsc = (evt) => {
         if (evt.key === "Escape") {
-            this.closePopup(document.querySelector(".popup_opened"));
+            this.close(document.querySelector(".popup_opened"));
         }
     }
 
     closePopupWithOverlay = (evt) => {
         if (evt.target.classList.contains('popup')) {
             const popup = evt.target.closest('.popup')
-            this.closePopup(popup);
+            this.close(popup);
         }
+    }
+
+    setEventListeners() {
+        this.popup.querySelector('.popup__close').addEventListener('click', this.closePopup)
     }
 }
 
- export const openModalPhoto = (cardEl) => {
-    modalPhoto.querySelector('.popup__image').src = cardEl.link
-    modalPhoto.querySelector('.popup__image').alt = cardEl.name
-    modalPhoto.querySelector('.popup__name').textContent = cardEl.name
-    openPopup(modalPhoto)
-}
+//  export const openModalPhoto = (cardEl) => {
+//     modalPhoto.querySelector('.popup__image').src = cardEl.link
+//     modalPhoto.querySelector('.popup__image').alt = cardEl.name
+//     modalPhoto.querySelector('.popup__name').textContent = cardEl.name
+//     openPopup(modalPhoto)
+// }
