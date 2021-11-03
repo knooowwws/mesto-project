@@ -26,7 +26,8 @@ export const makeCard = (cardEl) => {
                 console.log(err);
             })
     })
-    card.querySelector('.cards__img').addEventListener('click', () => openModalPhoto(cardEl))
+    card.querySelector('.cards__img').addEventListener('click', () => openModalPhoto(cardEl)) //?
+
     if (cardEl.owner._id === userId) {
         card.querySelector('.cards__trash').classList.add('cards__trash_status_visible')
         card.querySelector('.cards__trash').addEventListener('click', (evt) => {
@@ -47,6 +48,7 @@ export const makeCard = (cardEl) => {
             }
         })
     }
+
     card.querySelector('.cards__like-counter').textContent = cardEl.likes.length;
     return card;
 }

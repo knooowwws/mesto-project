@@ -72,19 +72,19 @@ export class Api {
     toggleLikeCard = (evt, cardEl) => {
         if (!evt.target.classList.contains('cards__btn_like')) {
             return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
-                method: 'DELETE',
-                headers: {
-                    authorization: `${this._token}`,
-                    'Content-Type': 'application/json'
-                },
-            })
-        } else {
-            return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
                 method: 'PUT',
                 headers: {
                     authorization: `${this._token}`,
                     'Content-Type': 'application/json'
                 }
+            })
+        } else {
+            return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `${this._token}`,
+                    'Content-Type': 'application/json'
+                },
             })
         }
     }

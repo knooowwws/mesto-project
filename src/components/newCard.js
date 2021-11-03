@@ -3,13 +3,14 @@ import {formMesto, inputLocation, inputUrl, modalAdd, modalAddBtn} from '../page
 import {arrForValidation, disableSubmitBtn} from "./validate";
 
 export class Card {
-  constructor({name , link , owner , likes , _id},selector){
+  constructor({name , link , owner , likes , _id}, selector, api){
     this.name = name;
     this.owner = owner;
     this.link = link;
     this._id = _id;
     this.selector = selector;
     this.likes = likes;
+    this.api = api
   }
   _createCard() {
     const cardElement = document.querySelector(this.selector).content;
@@ -29,20 +30,53 @@ export class Card {
 
     return card
   }
+
+  this.element = this._createCard()
+
    _setEventListeners() {
    const element = this._createCard()
    element.querySelector('.cards__btn').addEventListener('click', (evt) => {
-      toggleLikeCard(evt, cardEl)
-          .then((res) => {
-              evt.target.parentNode.querySelector('.cards__like-counter').textContent = res.likes.length;
-              evt.target.classList.toggle('cards__btn_like');
-          })
-          .catch((err) => {
-              console.log(err);
-          })
+       this._handleLikeClick()
   })
   card.querySelector('.cards__img').addEventListener('click', () => openModalPhoto(cardEl))
    }
+
+    _handleLikeClick() {
+      const likeButton = this.element.querySelector('.cards__btn')
+      const likeCount = this.element.querySelector('.cards__like-counter')
+      if (!(likeButton.contains('cards__btn-like'))) {
+          this.api.toggleLikeCard(evt, this._id)
+              .then(r => {
+                  likeCount = r.likes.length
+                  likeButton.classList.add('cards__btn-like')
+
+              })
+      } else
+          this.api.toggleLikeCard(evt, this._id)
+              .then(r => {
+                  likeCount = r.likes.length
+                  likeButton.classList.remove('cards__btn-like')
+              })
+    }
+
+    _handleDeleteIconClick () {
+        if (this.owner._id === userId) {
+            this.element.querySelector('.cards__trash').classList.add('cards__trash_status_visible')
+            this.element.querySelector('.cards__trash').addEventListener('click', (evt) => {
+                this.api.deleteCard(this._id) //?
+                    .then(r => {
+                        evt.target.closest('.cards__item').remove()
+                    })
+                    .catch(res => {
+                        console.log(res)
+                    })
+            })
+        }
+    }
+
+    _handleCardClick() {
+        // добавить класс PopupWithImage
+    }
 
    _addCards = (cardEl) => {
     document.querySelector('.cards').prepend(cardEl);
