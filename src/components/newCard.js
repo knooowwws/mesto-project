@@ -1,7 +1,7 @@
 import {loadRender} from './utils'
 import {formMesto, inputLocation, inputUrl, modalAdd, modalAddBtn} from '../pages/index'
 import {arrForValidation, disableSubmitBtn} from "./validate";
-
+import { PopupWithImg } from './popupWithImg';
 export class Card {
   constructor({name , link , owner , likes , _id}, selector, api){
     this.name = name;
@@ -31,9 +31,10 @@ export class Card {
     return card
   }
 
-  this.element = this._createCard()
+ 
 
    _setEventListeners() {
+    this.element = this._createCard() // придумать, куда перенести 
    const element = this._createCard()
    element.querySelector('.cards__btn').addEventListener('click', (evt) => {
        this._handleLikeClick()
@@ -75,7 +76,7 @@ export class Card {
     }
 
     _handleCardClick() {
-        // добавить класс PopupWithImage
+      PopupWithImg.open(this._element)
     }
 
    _addCards = (cardEl) => {
