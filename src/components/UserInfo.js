@@ -1,25 +1,22 @@
 
 
 export class UserInfo {
-    constructor({ name, info, avatar }, getUserData, api) {
+    constructor({ name, info}, api) {
         this.name = document.querySelector(`.${name}`)
         this.info = document.querySelector(`.${info}`)
-        this.info = document.querySelector(`.${avatar}`)
-        this.obj = {
-            name: this.name.textContent,
-            info: this.info.textContent
-        }
+        this.avatar = document.querySelector(`.${avatar}`)
+        this.api = api
     }
 
-    getUserInfo(){
-        return getUserData
+    getUserInfo() {
+        return api.getUserProfile()
     }
 
     setUserInfo({name, info}) {
         return this._api.saveProfileData(name, info)
             .then(r => {
-                this.name = r.name
-                this.info = r.info
+                this.name.textContent = r.name
+                this.info.textContent = r.info
             })
     }
 }
