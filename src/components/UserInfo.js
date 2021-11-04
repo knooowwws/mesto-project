@@ -1,5 +1,3 @@
-
-
 export class UserInfo {
     constructor({ name, info}, api) {
         this.name = document.querySelector(`.${name}`)

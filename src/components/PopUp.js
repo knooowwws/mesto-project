@@ -1,24 +1,12 @@
-//POPUPS
-import {
-    arrForValidation,
-    disableSubmitBtn,
-    enableSubmitBtn,
-    enableValidation,
-    hasInvalidInput,
-    inputIsValid, toggleButtonState
-} from "./validate";
-
-
 export default class PopUp {
-    constructor(selectorPopUp) {
-        this.popup = document.querySelector(selectorPopUp)
-        this.allCloseButton = document.querySelectorAll('.popup__close')
+    constructor(popupSelector) {
+        this.popup = document.querySelector(popupSelector)
+        
     }
 
-    open(popup) {
+    open() {
         this.popup.classList.add('popup_opened')
         document.addEventListener('keydown', this.closePopUpWithEsc)
-        this.popup.addEventListener('click', this.closePopupWithOverlay);
     }
 
     ClosePopUpWithButton() {
@@ -27,9 +15,8 @@ export default class PopUp {
         })
     }
 
-    close = (popup) => {
+    close = () => {
         document.removeEventListener('keydown', this.closePopUpWithEsc)
-        this.popup.removeEventListener('click', this.closePopupWithOverlay);
         this.popup.classList.remove('popup_opened')
     }
 
@@ -40,9 +27,8 @@ export default class PopUp {
     }
 
     closePopupWithOverlay = (evt) => {
-        if (evt.target.classList.contains('popup')) {
-            const popup = evt.target.closest('.popup')
-            this.close(popup);
+        if (evt.target.classList.contains('popup_opened')) {
+            this.close();
         }
     }
 
@@ -50,10 +36,3 @@ export default class PopUp {
         this.popup.querySelector('.popup__close').addEventListener('click', this.closePopup)
     }
 }
-
-//  export const openModalPhoto = (cardEl) => {
-//     modalPhoto.querySelector('.popup__image').src = cardEl.link
-//     modalPhoto.querySelector('.popup__image').alt = cardEl.name
-//     modalPhoto.querySelector('.popup__name').textContent = cardEl.name
-//     openPopup(modalPhoto)
-// }
