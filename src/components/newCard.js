@@ -1,9 +1,10 @@
-import {loadRender} from './utils'
-import {formMesto, inputLocation, inputUrl, modalAdd, modalAddBtn} from '../pages/index'
-import {arrForValidation, disableSubmitBtn} from "./validate";
-import { PopupWithImg } from './popupWithImg';
+// import {loadRender} from './utils'
+// import {formMesto, inputLocation, inputUrl, modalAdd, modalAddBtn} from '../pages/index'
+// import {arrForValidation, disableSubmitBtn} from "./validate";
+// import { PopupWithImg } from './popupWithImg';
+
 export class Card {
-  constructor({name , link , owner , likes , _id}, selector, api){
+  constructor({name , link , owner , likes , _id}, selector, api, handleCardClick, ){
     this.name = name;
     this.owner = owner;
     this.link = link;
@@ -29,13 +30,22 @@ export class Card {
     card.querySelector('.cards__like-counter').textContent = this.likes.length;
     return card
 }
+
 _setEventListeners() {
-    this.element = this._createCard() // придумать, куда перенести 
-    const element = this._createCard()
-    element.querySelector('.cards__btn').addEventListener('click', (evt) => {
+    this.element.querySelector('.cards__btn').addEventListener('click', (evt) => {
         this._handleLikeClick()
     })
-    card.querySelector('.cards__img').addEventListener('click', () => openModalPhoto(cardEl))
+    this.element.querySelector('.cards__img').addEventListener('click', () => handleCardClick())
+
+    this.element.querySelector('.cards__trash').addEventListener('click', (evt) => {
+        this.api.deleteCard(this._id) //?
+            .then(r => {
+                evt.target.closest('.cards__item').remove()
+            }).catch(res => {
+                console.log(res)
+            })
+        })
+
 }
 _handleLikeClick() {
     const likeButton = this.element.querySelector('.cards__btn')
@@ -45,22 +55,16 @@ _handleLikeClick() {
             likeCount = r.likes.length
             likeButton.classList.add('cards__btn-like')
         })
-    } else this.api.toggleLikeCard(evt, this._id).then(r => {
-        likeCount = r.likes.length
-        likeButton.classList.remove('cards__btn-like')
-    })
+    } else {
+        this.api.toggleLikeCard(evt, this._id).then(r => {
+            likeCount = r.likes.length
+            likeButton.classList.remove('cards__btn-like')
+        })
+    }
 }
 _handleDeleteIconClick() {
-    if (this.owner._id === userId) {
+    if (this.owner._id === this.userId) {
         this.element.querySelector('.cards__trash').classList.add('cards__trash_status_visible')
-        this.element.querySelector('.cards__trash').addEventListener('click', (evt) => {
-            this.api.deleteCard(this._id) //?
-            .then(r => {
-                evt.target.closest('.cards__item').remove()
-            }).catch(res => {
-                console.log(res)
-            })
-        })
     }
 }
 _handleCardClick() {
@@ -86,5 +90,9 @@ _addNewUserCard() {
     }).finally(r => {
         loadRender(modalAdd, false)
     })
+}
+
+generate() {
+    this.element = this._createCard() // придумать, куда перенести
 }
 }

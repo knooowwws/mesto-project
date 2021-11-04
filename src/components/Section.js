@@ -4,7 +4,7 @@ export class Section {
     this._renderer = renderer;
     this.selector = selector
   }
-  rederItems () {
+  renderItems () {
     this._item.forEach((item) => {
       this._renderer(item)
     });
