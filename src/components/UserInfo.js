@@ -1,13 +1,12 @@
 export class UserInfo {
-    constructor({ name, info, avatar}, api) {
+    constructor({ name, info}, api) {
         this.name = document.querySelector(`.${name}`)
         this.info = document.querySelector(`.${info}`)
-        this.avatar = document.querySelector(`.${avatar}`)
         this.api = api
     }
 
     getUserInfo() {
-        return api.getUserProfile()
+        return this.api.getUserProfile()
     }
 
     setUserInfo({name, info}) {
