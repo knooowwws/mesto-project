@@ -16,6 +16,7 @@ export class Api {
                 authorization: `${this._token}`
             }
         })
+            .then(r => this._getResponse(r))
     }
 
     getUserProfile = () => {
@@ -25,6 +26,7 @@ export class Api {
                 authorization: `${this._token}`
             }
         })
+            .then(r => this._getResponse(r))
     }
 
     saveProfileData = (name, about) => {
@@ -39,7 +41,7 @@ export class Api {
                 about: about
             })
         })
-
+            .then(r => this._getResponse(r))
     }
 
     saveProfileAvatar = (avatar) => {
@@ -53,6 +55,7 @@ export class Api {
                 avatar: avatar
             })
         })
+            .then(r => this._getResponse(r))
     }
 
     addNewCard = (name, link) => {
@@ -67,6 +70,7 @@ export class Api {
                 link: link
             })
         })
+            .then(r => this._getResponse(r))
     }
 
     toggleLikeCard = (evt, cardEl) => {
@@ -78,6 +82,7 @@ export class Api {
                     'Content-Type': 'application/json'
                 }
             })
+                .then(r => this._getResponse(r))
         } else {
             return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
                 method: 'DELETE',
@@ -86,6 +91,7 @@ export class Api {
                     'Content-Type': 'application/json'
                 },
             })
+                .then(r => this._getResponse(r))
         }
     }
 
@@ -94,6 +100,7 @@ export class Api {
             method: "DELETE",
             headers: config.headers,
         })
+            .then(r => this._getResponse(r))
     }
 
     loadRender(isLoading) {

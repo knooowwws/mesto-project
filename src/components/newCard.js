@@ -4,7 +4,7 @@
 // import { PopupWithImg } from './popupWithImg';
 
 export class Card {
-  constructor({name , link , owner , likes , _id}, selector, api, handleCardClick, ){
+  constructor({name , link , owner , likes , _id}, selector, api, handleCardClick, handleClickImg){
     this.name = name;
     this.owner = owner;
     this.link = link;
@@ -12,22 +12,24 @@ export class Card {
     this.selector = selector;
     this.likes = likes;
     this.api = api
+    this.handleClickImg = handleClickImg
+    this.handleCardClick = handleCardClick
   }
   _createCard() {
     const cardElement = document.querySelector(this.selector).content;
     const card = cardElement.querySelector('.cards__item').cloneNode(true);
-    const cardId = this._id
-    card.querySelector('.cards__name').textContent = this.name;
-    card.querySelector('.cards__img').src = this.link;
-    card.querySelector('.cards__img').alt = this.name;
-    if (card.likes) {
-        card.likes.forEach(el => {
-            if (el._id === this.userId) {
-                card.querySelector('.cards__btn').classList.add('cards__btn_like')
-            }
-        })
-    }
-    card.querySelector('.cards__like-counter').textContent = this.likes.length;
+    // const cardId = this._id
+    // card.querySelector('.cards__name').textContent = this.name;
+    // card.querySelector('.cards__img').src = this.link;
+    // card.querySelector('.cards__img').alt = this.name;
+    // if (card.likes) {
+    //     card.likes.forEach(el => {
+    //         if (el._id === this.userId) {
+    //             card.querySelector('.cards__btn').classList.add('cards__btn_like')
+    //         }
+    //     })
+    // }
+    // card.querySelector('.cards__like-counter').textContent = this.likes.length;
     return card
 }
 
@@ -35,7 +37,7 @@ _setEventListeners() {
     this.element.querySelector('.cards__btn').addEventListener('click', (evt) => {
         this._handleLikeClick()
     })
-    this.element.querySelector('.cards__img').addEventListener('click', () => handleCardClick())
+    this.element.querySelector('.cards__img').addEventListener('click', () => this.handleCardClick())
 
     this.element.querySelector('.cards__trash').addEventListener('click', (evt) => {
         this.api.deleteCard(this._id) //?
@@ -68,31 +70,41 @@ _handleDeleteIconClick() {
     }
 }
 _handleCardClick() {
-    PopupWithImg.open(this._element)
+    this.handleClickImg.open(this._element)
 }
-_addCards = (cardEl) => {
-    document.querySelector('.cards').prepend(cardEl);
-}
-_addInitialCards = () => {
-    cardEl.reverse().forEach(card => {
-        addCards(this._createCard())
-    })
-}
-_addNewUserCard() {
-    loadRender(modalAdd, true);
-    addNewCard(inputLocation.value, inputUrl.value).then(res => {
-        addCards(res)
-        disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
-        closePopup(modalAdd);
-        formMesto.reset()
-    }).catch((err) => {
-        console.log(err);
-    }).finally(r => {
-        loadRender(modalAdd, false)
-    })
-}
+// _addCards = (cardEl) => {
+//     document.querySelector('.cards').prepend(cardEl);
+// }
+// _addInitialCards = () => {
+//     cardEl.reverse().forEach(card => {
+//         addCards(this._createCard())
+//     })
+// }
+// _addNewUserCard() {
+//     loadRender(modalAdd, true);
+//     this.api.addNewCard(inputLocation.value, inputUrl.value).then(res => {
+//         this._addCards(res)
+//         // disableSubmitBtn(modalAddBtn, arrForValidation.disabledButtonSelector)
+//         closePopup(modalAdd);
+//         formMesto.reset()
+//     }).catch((err) => {
+//         console.log(err);
+//     }).finally(r => {
+//         loadRender(modalAdd, false)
+//     })
+// }
 
 generate() {
-    this.element = this._createCard() // придумать, куда перенести
+    this.element = this._createCard()
+    this._setEventListeners()
+    this._handleLikeClick()
+    this._handleDeleteIconClick()
+    this._handleCardClick()
+
+    this.element.querySelector('.cards__name').textContent = this.name;
+    this.element.querySelector('.cards__img').src = this.link;
+    this.element.querySelector('.cards__img').alt = this.name;
+    this.element.querySelector('.cards__like-counter').textContent = this.likes.length;
+    return this.element
 }
 }

@@ -1,5 +1,5 @@
 export class UserInfo {
-    constructor({ name, info}, api) {
+    constructor({ name, info, avatar}, api) {
         this.name = document.querySelector(`.${name}`)
         this.info = document.querySelector(`.${info}`)
         this.avatar = document.querySelector(`.${avatar}`)
