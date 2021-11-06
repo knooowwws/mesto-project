@@ -6,7 +6,8 @@ export const config = {
     }
 }
 
-
+export const template = document.querySelector('.card')
+export const cardSection = document.querySelector('.cards')
 const profile = document.querySelector('.profile');
 export const profileName = profile.querySelector('.profile__name');
 export const profileWork = profile.querySelector('.profile__work-place');
@@ -18,6 +19,7 @@ export const inputName = modalProfile.querySelector('.form__input_name');
 export const inputProfile = modalProfile.querySelector('.form__input_profile');
 
 export const modalAvatar = document.querySelector('.popup_avatar')
+export const photoModal = document.querySelector('.popup_photo')
 export const formAvatar = modalAvatar.querySelector('.form_avatar')
 export const inputAvatar = formAvatar.querySelector('.form__input_avatar')
 

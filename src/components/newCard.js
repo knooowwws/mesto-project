@@ -4,16 +4,17 @@
 // import { PopupWithImg } from './popupWithImg';
 
 export class Card {
-  constructor({name , link , owner , likes , _id}, selector, api, handleCardClick, handleClickImg){
+  constructor({name , link , owner , likes , _id}, selector, api, liked , myCard, handleClickImg){
     this.name = name;
     this.owner = owner;
     this.link = link;
     this._id = _id;
     this.selector = selector;
     this.likes = likes;
-    this.api = api
+    this.api = api;
+    this._liked = liked;
+    this._myCard = myCard;
     this.handleClickImg = handleClickImg
-    this.handleCardClick = handleCardClick
   }
   _createCard() {
     const cardElement = document.querySelector(this.selector).content;
@@ -37,8 +38,8 @@ _setEventListeners() {
     this.element.querySelector('.cards__btn').addEventListener('click', (evt) => {
         this._handleLikeClick()
     })
-    this.element.querySelector('.cards__img').addEventListener('click', () => this.handleCardClick())
-
+    this.element.querySelector('.cards__img').addEventListener('click', () => this.handleClickImg(this.name , this.link))
+    
     this.element.querySelector('.cards__trash').addEventListener('click', (evt) => {
         this.api.deleteCard(this._id) //?
             .then(r => {
@@ -52,7 +53,7 @@ _setEventListeners() {
 _handleLikeClick() {
     const likeButton = this.element.querySelector('.cards__btn')
     const likeCount = this.element.querySelector('.cards__like-counter')
-    if (!(likeButton.contains('cards__btn-like'))) {
+    if (this._liked) {
         this.api.toggleLikeCard(evt, this._id).then(r => {
             likeCount = r.likes.length
             likeButton.classList.add('cards__btn-like')
@@ -65,13 +66,13 @@ _handleLikeClick() {
     }
 }
 _handleDeleteIconClick() {
-    if (this.owner._id === this.userId) {
+    if (this._myCard) {
         this.element.querySelector('.cards__trash').classList.add('cards__trash_status_visible')
     }
 }
-_handleCardClick() {
-    this.handleClickImg.open(this._element)
-}
+// _handleCardClick() {
+//     this.handleClickImg.open(this._element)
+// }
 // _addCards = (cardEl) => {
 //     document.querySelector('.cards').prepend(cardEl);
 // }
@@ -93,6 +94,9 @@ _handleCardClick() {
 //         loadRender(modalAdd, false)
 //     })
 // }
+addCard(template, cardSection ) {
+   cardSection.prepend(this.createCard(template));
+}
 
 generate() {
     this.element = this._createCard()
