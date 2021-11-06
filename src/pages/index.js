@@ -1,9 +1,9 @@
 import { Api } from "../components/api";
-import Card from "../components/newCard"
+import {Card} from "../components/newCard"
 import PopUp from "../components/PopUp"
-import PopupWithImg from "../components/popupWithImg"
+import {PopupWithImg} from "../components/popupWithImg"
 import PopupWithForm from "../components/popupWithForm"
-import Section from "../components/Section"
+import {Section} from "../components/Section"
 import { UserInfo } from "../components/UserInfo"
 import FormValidator from "../components/validate"
 import {config, profileName, profileWork, profileAvatar, template, cardSection , photoModal} from "../components/constants"
@@ -14,7 +14,7 @@ function getId(id) {
     myId = id
 }
 
-const api = new Api (config.baseUrl , config.headers)
+const api = new Api (config)
 const userInfo = new UserInfo('profile__name', 'profile__work-place', api)
 
 const cardRender = (item) => {
@@ -28,11 +28,14 @@ const cardRender = (item) => {
 	if (item.owner._id === myId) {
 		myCard = true;
 	}
-	const card = new Card(item, template, api, liked, myCard, photoModal.open.bind(photoModal));
+	const card = new Card(item, template, api, liked, myCard, /*photoModal.open.bind(photoModal) */);
 	card.addCard(template, cardSection);
 };
 
-Promise.all([userInfo.getUserInfo(), api.getInitialCards()]).then(([userData, cards]) => {
+console.log(api.getUserProfile())
+console.log(api.getInitialCards())
+
+Promise.all([api.getUserProfile(), api.getInitialCards()]).then(([userData, cards]) => {
     getId(userData._id)
     profileName.textContent = userData.name
     profileWork.textContent = userData.about
@@ -46,7 +49,7 @@ Promise.all([userInfo.getUserInfo(), api.getInitialCards()]).then(([userData, ca
    section.renderItems();
 })
 
-const popUpWithImg = new PopupWithImg(photoModal)
+const popUpWithImg = new PopupWithImg('.popup_photo')
 
 
 //вызовы

@@ -1,10 +1,21 @@
+// export const config = {
+//     baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-2',
+//     headers: {
+//         authorization: 'f8b50c22-f9ea-4450-b40d-792adb8f1524',
+//         'Content-Type': 'application/json'
+//     }
+// }
+
 export const config = {
     baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-2',
-    headers: {
+    contentHeader: {
         authorization: 'f8b50c22-f9ea-4450-b40d-792adb8f1524',
         'Content-Type': 'application/json'
-    }
-}
+    },
+    token: {
+        authorization: 'f8b50c22-f9ea-4450-b40d-792adb8f1524'
+    },
+};
 
 export const template = document.querySelector('.card')
 export const cardSection = document.querySelector('.cards')
