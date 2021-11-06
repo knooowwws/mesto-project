@@ -1,3 +1,5 @@
+import './index.css';
+
 import { Api } from "../components/api";
 import {Card} from "../components/newCard"
 import PopUp from "../components/PopUp"
