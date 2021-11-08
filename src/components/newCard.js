@@ -80,7 +80,7 @@
 
 
 export class Card {
-    constructor({ link, name, likes, _id }, isLiked, cardIsMine, handleOnImageClick, api) {
+    constructor({ link, name, likes, _id }, isLiked, cardIsMine ,api, handleOnImageClick) {
         this._link = link;
         this._name = name;
         this._likes = likes;
@@ -127,21 +127,16 @@ export class Card {
         button.classList.toggle('.cards__btn-like');
         const countElement = button.parentElement.querySelector('.cards__like-counter');
         if (Array.from(button.classList).includes('cards__btn-like')) {
-            this._api.toggleLikeAtServer('PUT', cardId)
-                .catch((err) => {
-                    console.log(err);
-                });
+            this._api.putLike(cardId)
             countElement.textContent = +countElement.textContent + 1;
-        } else {
-            this._api.toggleLikeAtServer('DELETE', cardId)
-                .catch((err) => {
-                    console.log(err);
-                });
-            countElement.textContent = +countElement.textContent - 1;
-        }
+        // } else {
+        //     this._api.toggleLikeCard(evt , cardId)
+        //     countElement.textContent = +countElement.textContent - 1;
+        // }
     }
+}
 
     addCard(template, photoGrid, deletePopup) {
         photoGrid.prepend(this.createCard(template, deletePopup));
     }
-}
+ }

@@ -61,26 +61,31 @@ export class Api {
             .then(r => this._getResponse(r))
     }
 
-    toggleLikeCard = (evt, cardEl) => {
-        if (!evt.target.classList.contains('cards__btn_like')) {
-            return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
-                method: 'PUT',
-                headers: this._contentHeader
-            })
-                .then(r => this._getResponse(r))
-        } else {
-            return fetch(`${this._url}/cards/likes/${cardEl._id}`, {
-                method: 'DELETE',
-                headers: this._contentHeader,
-            })
-                .then(r => this._getResponse(r))
-        }
+    likeCard = (cardId) => {
+        return fetch(`${this._url}cards/likes/${cardId}`, {
+          method: 'PUT',
+          headers: {
+            authorization: this._contentHeader
+          }
+        })
+          .then(this._checkResponse)
+      }
+    
+
+    dislikeCard = (cardId) => {
+        return fetch(`${this._url}cards/likes/${cardId}`, {
+            method: 'DELETE',
+            headers: {
+              authorization: this._token
+            }
+          })
+            .then(this._checkResponse)
     }
 
     deleteCard = (cardId) => {
         return fetch(`${this._url}/cards/${cardId}`, {
             method: "DELETE",
-            headers: this._contentHeader,
+            headers: this._token,
         })
             .then(r => this._getResponse(r))
     }

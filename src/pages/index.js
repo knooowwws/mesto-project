@@ -4,11 +4,11 @@ import { Api } from "../components/api";
 import {Card} from "../components/newCard"
 import PopUp from "../components/PopUp"
 import {PopupWithImg} from "../components/popupWithImg"
-import PopupWithForm from "../components/popupWithForm"
+import {PopupWithForm} from "../components/popupWithForm"
 import {Section} from "../components/Section"
 import { UserInfo } from "../components/UserInfo"
 import FormValidator from "../components/validate"
-import {config, profileName, profileWork, profileAvatar, template, cardSection , photoModal} from "../components/constants"
+import {config, profileName, profileWork, profileAvatar,modalProfile, template, cardSection , photoModal} from "../components/constants"
 
 let myId
 let section
@@ -30,18 +30,15 @@ const cardRender = (item) => {
 	if (item.owner._id === myId) {
 		myCard = true;
 	}
-	const card = new Card(item, template, api, liked, myCard, /*photoModal.open.bind(photoModal) */);
+	const card = new Card(item, api, liked, myCard, PopupWithImg.open.bind(popUpWithImg));
 	card.addCard(template, cardSection);
 };
-
-console.log(api.getUserProfile())
-console.log(api.getInitialCards())
 
 Promise.all([api.getUserProfile(), api.getInitialCards()]).then(([userData, cards]) => {
     getId(userData._id)
     profileName.textContent = userData.name
     profileWork.textContent = userData.about
-    profileAvatar.textContent = userData.avatar
+    profileAvatar.src = userData.avatar
     section = new Section({
         items: cards,
         renderer: function (item) {
@@ -51,8 +48,20 @@ Promise.all([api.getUserProfile(), api.getInitialCards()]).then(([userData, card
    section.renderItems();
 })
 
-const popUpWithImg = new PopupWithImg('.popup_photo')
+ const popUpWithImg = new PopupWithImg('.popup_photo')
+
+// const popupFormEditProfile = new PopupWithForm(modalProfile, (newData) => {
+//     // popupFormEditProfile.renderLoading(true)
+//     api.saveProfileData(newData.name , newData.about)
+//       .then((res) => {
+//         userInfo.setUserInfo(res)
+//         popupFormEditProfile.close()
+//       })
+//       .catch((err) => console.log(err))
+//     //   .finally(() => popupFormEditProfile.renderLoading(false))
+//   })
+//   popupFormEditProfile.setEventListeners();
 
 
-//вызовы
 popUpWithImg.setEventListeners()
+
