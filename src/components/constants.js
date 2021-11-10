@@ -8,34 +8,106 @@
 
 export const config = {
     baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-2',
-    contentHeader: {
+    header: {
         authorization: 'f8b50c22-f9ea-4450-b40d-792adb8f1524',
         'Content-Type': 'application/json'
     },
-    token: {
-        authorization: 'f8b50c22-f9ea-4450-b40d-792adb8f1524'
-    },
 };
 
-export const template = document.querySelector('.card')
-export const cardSection = document.querySelector('.cards')
-const profile = document.querySelector('.profile');
-export const profileName = profile.querySelector('.profile__name');
-export const profileWork = profile.querySelector('.profile__work-place');
-const profileEditButton = profile.querySelector('.profile__btn-edit');
-export const profileAvatar = profile.querySelector('.profile__avatar')
+// export const template = document.querySelector('.card')
+// export const cardSection = document.querySelector('.cards')
+// const profile = document.querySelector('.profile');
+// export const profileName = profile.querySelector('.profile__name');
+// export const profileWork = profile.querySelector('.profile__work-place');
+// const profileEditButton = profile.querySelector('.profile__btn-edit');
+// export const profileAvatar = profile.querySelector('.profile__avatar')
 
-export const modalProfile = document.querySelector('.popup_profile')
-export const inputName = modalProfile.querySelector('.form__input_name');
-export const inputProfile = modalProfile.querySelector('.form__input_profile');
+// export const modalProfile = document.querySelector('.popup_profile')
+// export const inputName = modalProfile.querySelector('.form__input_name');
+// export const inputProfile = modalProfile.querySelector('.form__input_profile');
 
-export const modalAvatar = document.querySelector('.popup_avatar')
-export const photoModal = document.querySelector('.popup_photo')
-export const formAvatar = modalAvatar.querySelector('.form_avatar')
-export const inputAvatar = formAvatar.querySelector('.form__input_avatar')
+// export const modalAvatar = document.querySelector('.popup_avatar')
+// export const photoModal = document.querySelector('.popup_photo')
+// export const formAvatar = modalAvatar.querySelector('.form_avatar')
+// export const inputAvatar = formAvatar.querySelector('.form__input_avatar')
 
-export const modalAdd = document.querySelector('.popup_mesto')
-export const formMesto = modalAdd.querySelector('.form_mesto')
-export const inputLocation = modalAdd.querySelector('.form__input_location');
-export const inputUrl = modalAdd.querySelector('.form__input_url');
-export const modalAddBtn = modalAdd.querySelector('.popup__submit_mesto')
+// export const modalAdd = document.querySelector('.popup_mesto')
+// export const formMesto = modalAdd.querySelector('.form_mesto')
+// export const inputLocation = modalAdd.querySelector('.form__input_location');
+// export const inputUrl = modalAdd.querySelector('.form__input_url');
+// export const modalAddBtn = modalAdd.querySelector('.popup__submit_mesto')
+
+
+export const cardConfig = {
+    elementImage: ('.cards__img'),
+    elementTitle: ('.cards__name'),
+    elementLike: ('.cards__btn'),
+    LikeActive: ('cards__btn_like'),
+    elementDel: ('.cards__trash'),
+    elementDelVisible: ('cards__trash_status_visible'),
+    elementsContainer: document.querySelector('.cards'),
+    likeCounter: ('.cards__like-counter')
+  };
+  
+  export const profile = {
+    image: document.querySelector('.profile__avatar')
+  }
+  
+  export const avatar = document.querySelector('.popup_avatar')
+
+  export const popupEditConfig = {
+    editPopup: document.querySelector('.popup_profile'),
+    nameInput: document.querySelector('input[name="name"]'),
+    jobInput: document.querySelector('input[name="profession"]'),
+    formEdit: document.querySelector('.form_profile'),
+    editBtn: document.querySelector('.profile__btn-edit'),
+    nameInfo: document.querySelector('.profile__name'),
+    jobInfo: document.querySelector('.profile__work-place')
+  };
+  
+  export const popupAddConfig = {
+    popupAdd: document.querySelector('.popup_mesto'),
+    formAdd: document.querySelector('.form_mesto'),
+    closePopupAdd: document.querySelector('.popup__close_mesto'),
+    addButton: document.querySelector('.profile__btn-add'),
+    inputPlace: document.querySelector('.form__input_location'),
+    inputSource: document.querySelector('.form__input_url')
+  };
+
+
+  export const imagePreviewConfig = {
+    // photoModal: document.querySelector('.popup_photo'),
+    photoImage: document.querySelector('.popup__image'),
+    altModal: document.querySelector('.popup__name')
+  };
+
+  export const popupsConfig = {
+    popups: document.querySelectorAll('.popup'),
+    buttonClosePopup: 'popup__close',
+    buttonCloseModal: document.querySelector('.popup__close_photo'),
+    popupOpened: 'popup_opened'
+  };
+
+  /// ТУТ НАЧИНАЮ ПИСАТЬ ОБНОВЛЕННЫЙ КОД
+  export const popupPhoto = document.querySelector('.popup_photo');
+
+  export const profileAvatar = document.querySelector('.profile__avatar')
+
+  
+export const validateConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_status_error',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_visible',
+  errorMessageEmptyInput: 'Вы пропустили это поле.',
+  errorMessageEmptyUrl: 'Введите адрес сайта.',
+  inputUrlClass: 'form__input_url'
+};
+
+export const buttons = {
+  avatar: document.querySelector('.popup__submit_avatar'),
+  add: document.querySelector('.popup__submit_mesto'),
+  edit: document.querySelector('.popup__submit_profile'),
+}
