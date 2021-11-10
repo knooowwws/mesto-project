@@ -16,6 +16,7 @@ function getId(id) {
     myId = id
 }
 
+const popUpWithImg = new PopupWithImg('.popup_photo')
 const api = new Api (config)
 const userInfo = new UserInfo('profile__name', 'profile__work-place', api)
 
@@ -30,8 +31,13 @@ const cardRender = (item) => {
 	if (item.owner._id === myId) {
 		myCard = true;
 	}
-	const card = new Card(item, api, liked, myCard, PopupWithImg.open.bind(popUpWithImg));
+	const card = new Card(item, api, liked, myCard, (evt) => {
+	    console.log(card)
+
+
+    });
 	card.addCard(template, cardSection);
+
 };
 
 Promise.all([api.getUserProfile(), api.getInitialCards()]).then(([userData, cards]) => {
@@ -48,7 +54,6 @@ Promise.all([api.getUserProfile(), api.getInitialCards()]).then(([userData, card
    section.renderItems();
 })
 
- const popUpWithImg = new PopupWithImg('.popup_photo')
 
 // const popupFormEditProfile = new PopupWithForm(modalProfile, (newData) => {
 //     // popupFormEditProfile.renderLoading(true)

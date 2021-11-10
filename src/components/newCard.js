@@ -111,9 +111,9 @@ export class Card {
     }
 
     _setEventListners(cardItem) {
-        this.pictureOnCard.addEventListener('click', () => {
-            this._handleOnImageClick(this._name, this._link);
-        });
+        // this.pictureOnCard.addEventListener('click', () => {
+        //     this._handleOnImageClick(item);
+        // });
         this.likeButton.addEventListener('click', () => this._switchLikeIcon(event.target, this._id));
         if (this._cardIsMine) {
             const deleteButton = cardItem.querySelector('.cards__trash');
