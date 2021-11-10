@@ -1,37 +1,28 @@
-export default class PopUp {
-    constructor(popupSelector) {
-        this.popup = document.querySelector(popupSelector)
-        
+import {popupsConfig} from "../components/constants";
+export class Popup {
+    constructor(popup) {
+        this._popup = popup;
     }
     open() {
-        this.popup.classList.add('popup_opened')
-        document.addEventListener('keydown', this.closePopUpWithEsc)
+        this._popup.classList.add(popupsConfig.popupOpened);
+        document.addEventListener('keydown', this._closePopupByEsc);
     }
-
-    ClosePopUpWithButton() {
-        this.allCloseButton.forEach(elem => {
-            elem.addEventListener('click', (evt) => this.close(evt.target.closest('.popup')))
-        })
+    close() {
+        this._popup.classList.remove(popupsConfig.popupOpened);
+        document.removeEventListener('keydown', this._closePopupByEsc);
     }
-
-    close = () => {
-        document.removeEventListener('keydown', this.closePopUpWithEsc)
-        this.popup.classList.remove('popup_opened')
-    }
-
-    closePopUpWithEsc = (evt) => {
-        if (evt.key === "Escape") {
-            this.close(document.querySelector(".popup_opened"));
+    _closePopupByEsc = (evt) => {
+        if(evt.key === 'Escape') {
+            this.close(this._popup);
         }
     }
-
-    closePopupWithOverlay = (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            this.close();
-        }
-    }
-
     setEventListeners() {
-        this.popup.querySelector('.popup__close').addEventListener('click', this.closePopup)
-    }
-}
+        this._popup.addEventListener('click', (evt) => {
+            if(evt.target.classList.contains(popupsConfig.buttonClosePopup)) {
+                this.close(this._popup);
+            }
+            if(evt.target.classList.contains(popupsConfig.popupOpened)) {
+                this.close(this._popup);
+            }
+        })
+    }}
