@@ -1,19 +1,29 @@
 export class UserInfo {
-    constructor({ name, info}, api) {
-        this.name = document.querySelector(`.${name}`)
-        this.info = document.querySelector(`.${info}`)
-        this.api = api
+    constructor(name, about, avatar) {
+      this._name = name;
+      this._about = about;
+      this._avatar = avatar;
     }
-
+  
     getUserInfo() {
-        return this.api.getUserProfile()
+      return {
+        name: this._name.textContent,
+        about: this._about.textContent,
+        id: this._id
+      }
     }
-
-    setUserInfo({name, info}) {
-        return this._api.saveProfileData(name, info)
-            .then(r => {
-                this.name.textContent = r.name
-                this.info.textContent = r.info
-            })
+  
+    setUserInfo(name, about, id) {
+      this._name.textContent = name;
+      this._about.textContent = about;
+      this._id = id;
     }
-}
+  
+    setUserAvatar(avatar) {
+      this._avatar.src = avatar;
+    }
+  
+    getUserId() {
+      return this._id;
+    }
+  }
