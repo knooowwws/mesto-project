@@ -18,7 +18,7 @@ const popupWithImg = new PopupWithImage(popupPhoto);
 const popupAdd = new PopupWithForm(popupAddConfig.popupAdd, {
     submitHandler: (data) => {
         buttons.add.textContent = 'Сохранение ...';
-        api.addNewCard(data.place, data.link)
+        api.addNewCard(data.location, data.url)
             .then(result => {
                 const addCard = createCard(result);
                 section.addItem(addCard, 'prepend');
@@ -33,7 +33,7 @@ const popupAdd = new PopupWithForm(popupAddConfig.popupAdd, {
 const popupEdit = new PopupWithForm(popupEditConfig.editPopup, {
     submitHandler: (data) => {
         buttons.edit.textContent = 'Сохранение ...';
-        api.saveProfileData(data.name, data.about)
+        api.saveProfileData(data.name, data.profession)
             .then(result => {
                 userInfo.setUserInfo(result.name, result.about)
                 popupEdit.close()
@@ -46,9 +46,9 @@ const popupEdit = new PopupWithForm(popupEditConfig.editPopup, {
 const popupAvatar = new PopupWithForm(avatarObj.avatarPopup, {
     submitHandler: (data) => {
         buttons.avatar.textContent = 'Сохранение ...';
-        api.saveProfileAvatar(data.avatar)
+        api.saveProfileAvatar(data.url)
             .then(result => {
-                userInfo.setUserAvatar(data.avatar)
+                userInfo.setUserAvatar(result.avatar)
                 popupAvatar.close()
             })
             .catch(result => console.log(`${result} при отправке данных пользователя`))
@@ -92,20 +92,8 @@ function createCard(item) {
     const element = new Card(item, {
             handleImageClick: (link, alt) => {
                 popupWithImg.open({link, alt});
-            },
-            toggleLike: (cardId) => {
-                if (cardId.querySelector(cardConfig.elementLike).classList.contains(cardConfig.LikeActive)) {
-                    api.dislikeCard(cardId.id)
-                        .then(result => element.removeLike(cardId, result.likes))
-                        .catch(result => console.log(`${result} при удалении лайка`))
-                } else {
-                    api.likeCard(cardId.id)
-                        .then(result => element.addLike(cardId, result.likes))
-                        .catch(result => console.log(`${result} при удалении лайка`))
-                }
             }
-        },
-        cardConfig, '.card', userId, api);
+        }, '.card', userId, api);
     const card = element.generateCard();
     return card;
 }
