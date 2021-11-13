@@ -1,6 +1,6 @@
 import './index.css';
 import { Api } from "../components/api";
-import {Card} from "../components/newCard"
+import {Card} from "../components/Card"
 import { Popup } from '../components/Popup';
 import {PopupWithImage} from "../components/popupWithImg"
 import { PopupWithForm } from '../components/popupWithForm';
@@ -11,7 +11,7 @@ import {config , cardConfig , profile , avatar, avatarObj , imagePreviewConfig, 
 //api
 const api = new Api(config)
 // user Info -
-const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, profileAvatar);  //При изменении объекта на простую константу - всё ломается
+const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, profileAvatar);
 // Модальные окна +
 const popupWithImg = new PopupWithImage(popupPhoto);
 
@@ -56,7 +56,6 @@ const popupAvatar = new PopupWithForm(popupsWithForm.avatar, {
     }
 })
 
-// consZ
 
 // Вызов модальных окон +
 popupWithImg.setEventListeners();
@@ -69,7 +68,6 @@ function handlePopupEdit() {
     const profileInfo = userInfo.getUserInfo();
     popupEditConfig.nameInput.value = profileInfo.name;
     popupEditConfig.jobInput.value = profileInfo.about;
-    // formEditValidate.clearValidationState();
     popupEdit.open();
 }
 popupEditConfig.editBtn.addEventListener('click', handlePopupEdit);

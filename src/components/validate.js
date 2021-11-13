@@ -35,8 +35,10 @@ export class FormValidate{
   _toggleButtonState(inputList, buttonElement) {
     if(this._hasInvalidInput(inputList)){
       buttonElement.classList.add(this._data.inactiveButtonClass);
+      buttonElement.setAttribute('disabled', 'disabled');
     } else {
       buttonElement.classList.remove(this._data.inactiveButtonClass);
+      buttonElement.removeAttribute('disabled');
     }
   }
 
@@ -57,6 +59,7 @@ export class FormValidate{
   enableValidation() {
     this._formSelector.addEventListener('submit', (evt) => {
         evt.preventDefault();
+
       })
 
       this._setEventListeners();
