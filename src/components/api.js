@@ -3,6 +3,7 @@ export class Api {
         this.url = baseUrl;
         this._header = header;
     }
+
     _getResponse = (res) => {
         if (res.ok) {
             return res.json();
@@ -77,14 +78,5 @@ export class Api {
             headers: this._header,
         })
             .then(r => this._getResponse(r))
-    }
-    loadRender(isLoading) {
-        const popupActive = document.querySelector('.popup_opened');
-        const activeSaveBtn = popupActive.querySelector('.popup__submit');
-        if (isLoading) {
-            activeSaveBtn.textContent = 'Сохранение...';
-        } else {
-            activeSaveBtn.textContent = 'Создать';
-        }
     }
 }

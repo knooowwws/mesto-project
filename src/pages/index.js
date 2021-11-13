@@ -1,18 +1,37 @@
 import './index.css';
-import { Api } from "../components/api";
+import {Api} from "../components/api";
 import {Card} from "../components/Card"
-import { Popup } from '../components/Popup';
+import {Popup} from '../components/Popup';
 import {PopupWithImage} from "../components/popupWithImg"
-import { PopupWithForm } from '../components/popupWithForm';
+import {PopupWithForm} from '../components/popupWithForm';
 import {Section} from "../components/Section"
-import { UserInfo } from "../components/UserInfo"
+import {UserInfo} from "../components/UserInfo"
 import {FormValidate} from "../components/validate"
-import {config , cardConfig , profile , avatar, avatarObj , imagePreviewConfig, popupEditConfig , popupPhoto , nameInput, aboutInput, profileAvatar, popupAddConfig , validateConfig, buttons, popupsWithForm} from "../components/constants"
+import {
+    config,
+    cardConfig,
+    profile,
+    avatar,
+    avatarObj,
+    imagePreviewConfig,
+    popupEditConfig,
+    popupPhoto,
+    nameInput,
+    aboutInput,
+    profileAvatar,
+    popupAddConfig,
+    validateConfig,
+    buttons,
+    popupsWithForm
+} from "../components/constants"
+
 //api
 const api = new Api(config)
-// user Info -
+
+// user Info
 const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, profileAvatar);
-// Модальные окна +
+
+// Модальные окна
 const popupWithImg = new PopupWithImage(popupPhoto);
 
 const popupAdd = new PopupWithForm(popupsWithForm.addPopup, {
@@ -56,20 +75,21 @@ const popupAvatar = new PopupWithForm(popupsWithForm.avatar, {
     }
 })
 
-
-// Вызов модальных окон +
+// Вызов модальных окон
 popupWithImg.setEventListeners();
 popupAdd.setEventListeners();
 popupAddConfig.addButton.addEventListener('click', () => {
     popupAdd.open()
 });
 popupEdit.setEventListeners();
+
 function handlePopupEdit() {
     const profileInfo = userInfo.getUserInfo();
     popupEditConfig.nameInput.value = profileInfo.name;
     popupEditConfig.jobInput.value = profileInfo.about;
     popupEdit.open();
 }
+
 popupEditConfig.editBtn.addEventListener('click', handlePopupEdit);
 
 popupAvatar.setEventListeners()
@@ -77,24 +97,26 @@ profile.image.addEventListener('click', () => {
     popupAvatar.open()
 })
 
-// Section +
+// Section
 const section = new Section({
     renderer: (item) => {
         const newCard = createCard(item);
         section.addItem(newCard, 'append');
     }
 }, '.cards');
+
 // Create Card
 function createCard(item) {
     const userId = userInfo.getUserId()
     const element = new Card(item, {
-            handleImageClick: (link, alt) => {
-                popupWithImg.open({link, alt});
-            }
-        }, '.card', userId, api);
+        handleImageClick: (link, alt) => {
+            popupWithImg.open({link, alt});
+        }
+    }, '.card', userId, api);
     const card = element.generateCard();
     return card;
 }
+
 // Promise All
 Promise.all([api.getUserProfile(), api.getInitialCards()])
     .then(([userData, cards]) => {
@@ -105,14 +127,10 @@ Promise.all([api.getUserProfile(), api.getInitialCards()])
     })
 
 const formProfileValidation = new FormValidate(validateConfig, popupsWithForm.editPopup);
+formProfileValidation.enableValidation();
 
-  formProfileValidation.enableValidation();
+const addCardValidation = new FormValidate(validateConfig, popupsWithForm.addPopup);
+addCardValidation.enableValidation();
 
-  const addCardValidation = new FormValidate(validateConfig, popupsWithForm.addPopup);
-
-  addCardValidation.enableValidation();
-
-
-  const avatarValidation = new FormValidate(validateConfig, popupsWithForm.avatar);
-
-  avatarValidation.enableValidation();
+const avatarValidation = new FormValidate(validateConfig, popupsWithForm.avatar);
+avatarValidation.enableValidation();
