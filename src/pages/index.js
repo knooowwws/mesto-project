@@ -48,7 +48,6 @@ const popupAvatar = new PopupWithForm(avatarObj.avatarPopup, {
         buttons.avatar.textContent = 'Сохранение ...';
         api.saveProfileAvatar(data.avatar)
             .then(result => {
-                console.log(data)
                 userInfo.setUserAvatar(data.avatar)
                 popupAvatar.close()
             })
