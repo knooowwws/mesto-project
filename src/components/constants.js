@@ -22,9 +22,9 @@ export const cardConfig = {
   }
   
   export const avatar = document.querySelector('.popup_avatar')
-
+  
   export const popupEditConfig = {
-    editPopup: document.querySelector('.popup_profile'),
+
     nameInput: document.querySelector('input[name="name"]'),
     jobInput: document.querySelector('input[name="profession"]'),
     formEdit: document.querySelector('.form_profile'),
@@ -34,7 +34,6 @@ export const cardConfig = {
   };
   
   export const popupAddConfig = {
-    popupAdd: document.querySelector('.popup_mesto'),
     formAdd: document.querySelector('.form_mesto'),
     closePopupAdd: document.querySelector('.popup__close_mesto'),
     addButton: document.querySelector('.profile__btn-add'),
@@ -65,19 +64,21 @@ export const avatarObj = {
 }
   
 export const validateConfig = {
-  formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.popup__submit',
   inactiveButtonClass: 'popup__submit_status_error',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__input-error_visible',
-  errorMessageEmptyInput: 'Вы пропустили это поле.',
-  errorMessageEmptyUrl: 'Введите адрес сайта.',
-  inputUrlClass: 'form__input_url'
+  inputErrorClass: 'form__input_status_error',
+  errorClass: '.form__input-error_visible'
 };
 
 export const buttons = {
   avatar: document.querySelector('.popup__submit_avatar'),
   add: document.querySelector('.popup__submit_mesto'),
   edit: document.querySelector('.popup__submit_profile'),
+}
+
+export const popupsWithForm =  {
+  editPopup: document.querySelector('.popup_profile'),
+  addPopup: document.querySelector('.popup_mesto'),
+  avatar: document.querySelector('.popup_avatar'),
 }

@@ -7,7 +7,7 @@ import { PopupWithForm } from '../components/popupWithForm';
 import {Section} from "../components/Section"
 import { UserInfo } from "../components/UserInfo"
 import {FormValidate} from "../components/validate"
-import {config , cardConfig , profile , avatar, avatarObj , imagePreviewConfig, popupEditConfig , popupPhoto , nameInput, aboutInput, profileAvatar, popupAddConfig , validateConfig, buttons} from "../components/constants"
+import {config , cardConfig , profile , avatar, avatarObj , imagePreviewConfig, popupEditConfig , popupPhoto , nameInput, aboutInput, profileAvatar, popupAddConfig , validateConfig, buttons, popupsWithForm} from "../components/constants"
 //api
 const api = new Api(config)
 // user Info -
@@ -15,7 +15,7 @@ const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo,
 // Модальные окна +
 const popupWithImg = new PopupWithImage(popupPhoto);
 
-const popupAdd = new PopupWithForm(popupAddConfig.popupAdd, {
+const popupAdd = new PopupWithForm(popupsWithForm.addPopup, {
     submitHandler: (data) => {
         buttons.add.textContent = 'Сохранение ...';
         api.addNewCard(data.location, data.url)
@@ -30,7 +30,7 @@ const popupAdd = new PopupWithForm(popupAddConfig.popupAdd, {
             })
     }
 });
-const popupEdit = new PopupWithForm(popupEditConfig.editPopup, {
+const popupEdit = new PopupWithForm(popupsWithForm.editPopup, {
     submitHandler: (data) => {
         buttons.edit.textContent = 'Сохранение ...';
         api.saveProfileData(data.name, data.profession)
@@ -43,7 +43,7 @@ const popupEdit = new PopupWithForm(popupEditConfig.editPopup, {
     }
 });
 
-const popupAvatar = new PopupWithForm(avatarObj.avatarPopup, {
+const popupAvatar = new PopupWithForm(popupsWithForm.avatar, {
     submitHandler: (data) => {
         buttons.avatar.textContent = 'Сохранение ...';
         api.saveProfileAvatar(data.url)
@@ -69,7 +69,7 @@ function handlePopupEdit() {
     const profileInfo = userInfo.getUserInfo();
     popupEditConfig.nameInput.value = profileInfo.name;
     popupEditConfig.jobInput.value = profileInfo.about;
-    formEditValidate.clearValidationState();
+    // formEditValidate.clearValidationState();
     popupEdit.open();
 }
 popupEditConfig.editBtn.addEventListener('click', handlePopupEdit);
@@ -105,16 +105,16 @@ Promise.all([api.getUserProfile(), api.getInitialCards()])
         section.renderItems(cards)
         return section;
     })
-//   .catch(result => console.log(`${result} при загрузке данных`))
-//   .finally(function () {
-//     whileLoading.profile.style.display = 'flex';
-//     whileLoading.footer.style.display = 'flex';
-//     whileLoading.loading.style.display = 'none';
-//   })
-// Validation
-const formEditValidate = new FormValidate(validateConfig, popupEditConfig.editPopup);
-formEditValidate.enableValidation();
-const formAddValidate = new FormValidate(validateConfig, popupAddConfig.popupAdd);
-formAddValidate.enableValidation();
-const formAvatarValidate = new FormValidate(validateConfig, avatar)
-formAvatarValidate.enableValidation();
+
+const formProfileValidation = new FormValidate(validateConfig, popupsWithForm.editPopup);
+
+  formProfileValidation.enableValidation();
+
+  const addCardValidation = new FormValidate(validateConfig, popupsWithForm.addPopup);
+
+  addCardValidation.enableValidation();
+
+
+  const avatarValidation = new FormValidate(validateConfig, popupsWithForm.avatar);
+
+  avatarValidation.enableValidation();
