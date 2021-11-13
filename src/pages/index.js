@@ -7,11 +7,14 @@ import { PopupWithForm } from '../components/popupWithForm';
 import {Section} from "../components/Section"
 import { UserInfo } from "../components/UserInfo"
 import {FormValidate} from "../components/validate"
-import {config , cardConfig , profile , avatar , imagePreviewConfig, popupEditConfig , popupPhoto , nameInput, aboutInput, profileAvatar, popupAddConfig , validateConfig, buttons} from "../components/constants"
+import {config , cardConfig , profile , avatar, avatarObj , imagePreviewConfig, popupEditConfig , popupPhoto , nameInput, aboutInput, profileAvatar, popupAddConfig , validateConfig, buttons} from "../components/constants"
 //api
 const api = new Api(config)
+// user Info -
+const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, profileAvatar);  //При изменении объекта на простую константу - всё ломается
 // Модальные окна +
 const popupWithImg = new PopupWithImage(popupPhoto);
+
 const popupAdd = new PopupWithForm(popupAddConfig.popupAdd, {
     submitHandler: (data) => {
         buttons.add.textContent = 'Сохранение ...';
@@ -21,7 +24,7 @@ const popupAdd = new PopupWithForm(popupAddConfig.popupAdd, {
                 section.addItem(addCard, 'prepend');
                 popupAdd.close();
             })
-            .catch(result => console.log(`${result} при отправке карточки`))
+            .catch(result => console.log(`при добавлении карточки ошибка ${result}`))
             .finally(() => {
                 buttons.add.textContent = 'Сохранить'
             })
@@ -36,11 +39,26 @@ const popupEdit = new PopupWithForm(popupEditConfig.editPopup, {
                 popupEdit.close()
             })
             .catch(result => console.log(`${result} при отправке данных пользователя`))
-            .finally(() => {
-                buttons.edit.textContent = 'Сохранить'
-            })
+            .finally(() => buttons.edit.textContent = 'Сохранить')
     }
 });
+
+const popupAvatar = new PopupWithForm(avatarObj.avatarPopup, {
+    submitHandler: (data) => {
+        buttons.avatar.textContent = 'Сохранение ...';
+        api.saveProfileAvatar(data.avatar)
+            .then(result => {
+                console.log(data)
+                userInfo.setUserAvatar(data.avatar)
+                popupAvatar.close()
+            })
+            .catch(result => console.log(`${result} при отправке данных пользователя`))
+            .finally(() => buttons.avatar.textContent = 'Сохранить')
+    }
+})
+
+// consZ
+
 // Вызов модальных окон +
 popupWithImg.setEventListeners();
 popupAdd.setEventListeners();
@@ -56,8 +74,12 @@ function handlePopupEdit() {
     popupEdit.open();
 }
 popupEditConfig.editBtn.addEventListener('click', handlePopupEdit);
-// user Info -
-const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, profileAvatar);  //При изменении объекта на простую константу - всё ломается
+
+popupAvatar.setEventListeners()
+profile.image.addEventListener('click', () => {
+    popupAvatar.open()
+})
+
 // Section +
 const section = new Section({
     renderer: (item) => {

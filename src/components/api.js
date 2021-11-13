@@ -1,6 +1,6 @@
 export class Api {
     constructor({baseUrl, header}) {
-        this._url = baseUrl;
+        this.url = baseUrl;
         this._header = header;
     }
     _getResponse = (res) => {
@@ -10,20 +10,20 @@ export class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
     }
     getInitialCards = () => {
-        return fetch(`${this._url}/cards`, {
+        return fetch(`${this.url}/cards`, {
             headers: this._header
         })
             .then(r => this._getResponse(r))
     }
     getUserProfile = () => {
-        return fetch(`${this._url}/users/me`, {
+        return fetch(`${this.url}/users/me`, {
             method: 'GET',
             headers: this._header
         })
             .then(r => this._getResponse(r))
     }
     saveProfileData = (name, about) => {
-        return fetch(`${this._url}/users/me`, {
+        return fetch(`${this.url}/users/me`, {
             method: 'PATCH',
             headers: this._header,
             body: JSON.stringify({
@@ -34,17 +34,20 @@ export class Api {
             .then(r => this._getResponse(r))
     }
     saveProfileAvatar = (avatar) => {
-        return fetch(`${this._url}/users/me/avatar`, {
+        return fetch(`${this.url}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._header,
             body: JSON.stringify({
                 avatar: avatar
             })
         })
-            .then(r => this._getResponse(r))
+            .then(r => {
+                this._getResponse(r)
+                console.log(this)
+            })
     }
     addNewCard = (name, link) => {
-        return fetch(`${this._url}/cards`, {
+        return fetch(`${this.url}/cards`, {
             method: 'POST',
             headers: this._header,
             body: JSON.stringify({
@@ -55,21 +58,21 @@ export class Api {
             .then(r => this._getResponse(r))
     }
     likeCard = (cardId) => {
-        return fetch(`${this._url}/cards/likes/${cardId}`, {
+        return fetch(`${this.url}/cards/likes/${cardId}`, {
             method: 'PUT',
             headers: this._header
         })
-            .then(this._checkResponse)
+            .then(r => this._getResponse(r))
     }
     dislikeCard = (cardId) => {
-        return fetch(`${this._url}/cards/likes/${cardId}`, {
+        return fetch(`${this.url}/cards/likes/${cardId}`, {
             method: 'DELETE',
             headers: this._header,
         })
-            .then(this._checkResponse)
+            .then(r => this._getResponse(r))
     }
     deleteCard = (cardId) => {
-        return fetch(`${this._url}/cards/${cardId}`, {
+        return fetch(`${this.url}/cards/${cardId}`, {
             method: "DELETE",
             headers: this._header,
         })

@@ -93,6 +93,10 @@ export const cardConfig = {
 
   export const profileAvatar = document.querySelector('.profile__avatar')
 
+export const avatarObj = {
+    avatarPopup: document.querySelector('.popup_avatar'),
+    avatarInput: document.querySelector('input[name="url"]')
+}
   
 export const validateConfig = {
   formSelector: '.form',

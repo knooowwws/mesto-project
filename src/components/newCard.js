@@ -1,6 +1,6 @@
 import { cardConfig } from "./constants";
 export class Card {
-    constructor({name, link, likes, owner, _id}, { handleImageClick}, cardConfig, template, userId , api) {
+    constructor({name, link, likes, owner, _id}, { handleImageClick, toggleLike}, cardConfig, template, userId , api) {
       this._template = template;
       this._element = this._getCardElement();
       this._title = name;
@@ -14,7 +14,7 @@ export class Card {
       this._cardDel = cardConfig.elementDel;
       this._handleImageClick = handleImageClick;
       this._userId = userId;
-    //   this._toggleLike = toggleLike;
+      this._toggleLike = toggleLike;
       this._likeCounter = this._element.querySelector(cardConfig.likeCounter)
       this.api = api;
     }
