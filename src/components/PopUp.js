@@ -1,4 +1,4 @@
-import {popupsConfig} from "../components/constants";
+import {popupsConfig} from "../utils/constants";
 
 export class Popup {
     constructor(popup) {
@@ -17,17 +17,17 @@ export class Popup {
 
     _closePopupWithEsc = (evt) => {
         if (evt.key === 'Escape') {
-            this.close(this._popup);
+            this.close(4);
         }
     }
 
     setEventListeners() {
         this._popup.addEventListener('click', (evt) => {
             if (evt.target.classList.contains(popupsConfig.buttonClosePopup)) {
-                this.close(this._popup);
+                this.close();
             }
             if (evt.target.classList.contains(popupsConfig.popupOpened)) {
-                this.close(this._popup);
+                this.close();
             }
         })
     }

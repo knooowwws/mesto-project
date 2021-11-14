@@ -1,12 +1,11 @@
 import './index.css';
-import {Api} from "../components/api";
+import {Api} from "../components/Api";
 import {Card} from "../components/Card"
-import {Popup} from '../components/Popup';
-import {PopupWithImage} from "../components/popupWithImg"
-import {PopupWithForm} from '../components/popupWithForm';
+import {PopupWithImage} from "../components/PopupWithImg"
+import {PopupWithForm} from '../components/PopupWithForm';
 import {Section} from "../components/Section"
 import {UserInfo} from "../components/UserInfo"
-import {FormValidate} from "../components/validate"
+import {FormValidate} from "../components/FormValidate"
 import {
     config,
     cardConfig,
@@ -23,7 +22,7 @@ import {
     validateConfig,
     buttons,
     popupsWithForm
-} from "../components/constants"
+} from "../utils/constants"
 
 //api
 const api = new Api(config)
@@ -43,7 +42,7 @@ const popupAdd = new PopupWithForm(popupsWithForm.addPopup, {
                 section.addItem(addCard, 'prepend');
                 popupAdd.close();
             })
-            .catch(result => console.log(`при добавлении карточки ошибка ${result}`))
+            .catch(result => console.log(result))
             .finally(() => {
                 buttons.add.textContent = 'Сохранить'
             })
@@ -57,20 +56,19 @@ const popupEdit = new PopupWithForm(popupsWithForm.editPopup, {
                 userInfo.setUserInfo(result.name, result.about)
                 popupEdit.close()
             })
-            .catch(result => console.log(`${result} при отправке данных пользователя`))
+            .catch(result => console.log(result))
             .finally(() => buttons.edit.textContent = 'Сохранить')
     }
 });
-
 const popupAvatar = new PopupWithForm(popupsWithForm.avatar, {
     submitHandler: (data) => {
         buttons.avatar.textContent = 'Сохранение ...';
-        api.saveProfileAvatar(data.url)
+        api.saveProfileAvatar(data.avatar)
             .then(result => {
                 userInfo.setUserAvatar(result.avatar)
                 popupAvatar.close()
             })
-            .catch(result => console.log(`${result} при отправке данных пользователя`))
+            .catch(result => console.log(`${result} ошибка тут`))
             .finally(() => buttons.avatar.textContent = 'Сохранить')
     }
 })
@@ -112,7 +110,7 @@ function createCard(item) {
         handleImageClick: (link, alt) => {
             popupWithImg.open({link, alt});
         }
-    }, '.card', userId, api);
+    }, '.card', userId, api, cardConfig);
     const card = element.generateCard();
     return card;
 }

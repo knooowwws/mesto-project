@@ -44,7 +44,6 @@ export class Api {
         })
             .then(r => {
                 this._getResponse(r)
-                console.log(this)
             })
     }
     addNewCard = (name, link) => {

@@ -1,18 +1,18 @@
 export class FormValidate {
-    constructor(data, formSelector) {
+    constructor(data, form) {
         this._data = data;
-        this._formSelector = formSelector;
+        this._form = form;
     }
 
     _showErrorMessage(input, errorMessage) {
-        const errorElement = document.getElementById(`${input.name}-error`);
+        const errorElement = this._form.querySelector(`#${input.name}-error`);
         input.classList.add(this._data.inputErrorClass);
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this._data.errorClass);
     }
 
     _hideErrorMessage(input) {
-        const errorElement = document.getElementById(`${input.name}-error`);
+        const errorElement = this._form.querySelector(`#${input.name}-error`);
         input.classList.remove(this._data.inputErrorClass);
         errorElement.textContent = '';
         errorElement.classList.remove(this._data.errorClass);
@@ -43,8 +43,8 @@ export class FormValidate {
     }
 
     _setEventListeners() {
-        const inputList = Array.from(this._formSelector.querySelectorAll(this._data.inputSelector));
-        const buttonElement = this._formSelector.querySelector(this._data.submitButtonSelector);
+        const inputList = Array.from(this._form.querySelectorAll(this._data.inputSelector));
+        const buttonElement = this._form.querySelector(this._data.submitButtonSelector);
 
         this._toggleButtonState(inputList, buttonElement);
 
@@ -57,7 +57,7 @@ export class FormValidate {
     }
 
     enableValidation() {
-        this._formSelector.addEventListener('submit', (evt) => {
+        this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
 
         })

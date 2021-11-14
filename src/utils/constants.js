@@ -7,14 +7,11 @@ export const config = {
 };
 
 export const cardConfig = {
-    elementImage: ('.cards__img'),
-    elementTitle: ('.cards__name'),
-    elementLike: ('.cards__btn'),
-    LikeActive: ('cards__btn_like'),
-    elementDel: ('.cards__trash'),
-    elementDelVisible: ('cards__trash_status_visible'),
-    elementsContainer: document.querySelector('.cards'),
-    likeCounter: ('.cards__like-counter')
+    cardImage: ('.cards__img'),
+    likeBtn: ('.cards__btn'),
+    activeLike: ('cards__btn_like'),
+    deleteBtn: ('.cards__trash'),
+    likesCounter: ('.cards__like-counter')
 };
 
 export const profile = {
