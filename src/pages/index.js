@@ -53,6 +53,7 @@ const popupEdit = new PopupWithForm(popupsWithForm.editPopup, {
         buttons.edit.textContent = 'Сохранение ...';
         api.saveProfileData(data.name, data.profession)
             .then(result => {
+                console.log(result)
                 userInfo.setUserInfo(result.name, result.about)
                 popupEdit.close()
             })

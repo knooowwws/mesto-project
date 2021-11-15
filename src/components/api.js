@@ -36,16 +36,13 @@ export class Api {
     }
     saveProfileAvatar = (avatar) => {
         return fetch(`${this.url}/users/me/avatar`, {
-            method: 'PATCH',
-            headers: this._header,
-            body: JSON.stringify({
-                avatar: avatar
-            })
-        })
-            .then(r => {
-                this._getResponse(r)
-            })
-    }
+          method: 'PATCH',
+          headers: this._header,
+          body: JSON.stringify({
+            avatar: avatar
+          })
+        }).then(r => this._getResponse(r));
+      }
     addNewCard = (name, link) => {
         return fetch(`${this.url}/cards`, {
             method: 'POST',
