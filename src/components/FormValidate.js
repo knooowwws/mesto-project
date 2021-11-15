@@ -57,11 +57,15 @@ export class FormValidate {
     }
 
     enableValidation() {
+        const buttonElement = this._form.querySelector(this._data.submitButtonSelector);
+        this._setEventListeners();
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-
+        })
+        this._form.addEventListener('reset', () => {
+            buttonElement.classList.add(this._data.inactiveButtonClass);
+            buttonElement.setAttribute('disabled', 'disabled');
         })
 
-        this._setEventListeners();
     }
 }
