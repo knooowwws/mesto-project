@@ -124,6 +124,7 @@ Promise.all([api.getUserProfile(), api.getInitialCards()])
         section.renderItems(cards)
         return section;
     })
+    .catch(res => {console.log(res)})
 
 const formProfileValidation = new FormValidate(validateConfig, popupsWithForm.editPopup);
 formProfileValidation.enableValidation();
