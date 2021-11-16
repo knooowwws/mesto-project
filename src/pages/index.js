@@ -9,26 +9,24 @@ import {FormValidate} from "../components/FormValidate"
 import {
     config,
     cardConfig,
-    profile,
     avatar,
     avatarObj,
     imagePreviewConfig,
     popupEditConfig,
     popupPhoto,
-    nameInput,
-    aboutInput,
-    profileAvatar,
     popupAddConfig,
     validateConfig,
     buttons,
-    popupsWithForm
+    popupsWithForm,
+    avatarImg,
+    profileAvatar
 } from "../utils/constants"
 
 //api
 const api = new Api(config)
 
 // user Info
-const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, profileAvatar);
+const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, avatarImg);
 
 // Модальные окна
 const popupWithImg = new PopupWithImage(popupPhoto);
@@ -92,7 +90,7 @@ function handlePopupEdit() {
 popupEditConfig.editBtn.addEventListener('click', handlePopupEdit);
 
 popupAvatar.setEventListeners()
-profile.image.addEventListener('click', () => {
+profileAvatar.addEventListener('click', () => {
     popupAvatar.open()
 })
 

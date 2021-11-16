@@ -14,9 +14,6 @@ export const cardConfig = {
     likesCounter: ('.cards__like-counter')
 };
 
-export const profile = {
-    image: document.querySelector('.profile__avatar')
-}
 
 export const avatar = document.querySelector('.popup_avatar')
 
@@ -53,7 +50,9 @@ export const popupsConfig = {
 
 export const popupPhoto = document.querySelector('.popup_photo');
 
-export const profileAvatar = document.querySelector('.profile__avatar')
+export const profileAvatar = document.querySelector('.profile__avatar-button')
+
+export const avatarImg = document.querySelector('.profile__avatar')
 
 export const avatarObj = {
     avatarPopup: document.querySelector('.popup_avatar'),
