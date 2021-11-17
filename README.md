@@ -11,3 +11,6 @@
 
 
 Использованные технологии: HTML, CSS, JS, Webpack
+
+*Ссылка на контрибьютора
+https://github.com/LiubovMavlieva

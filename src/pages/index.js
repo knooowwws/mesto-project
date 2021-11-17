@@ -1,85 +1,134 @@
 import './index.css';
-import {addInitialCards, makeCard, addCards, getId, getArrayCards, userId, getUserId, addNewUserCard} from "../components/card";
-import {openPopup, closePopup, closePopUpWithEsc, closePopupWithOverlay, openModalPhoto, modalPhoto} from "../components/modal";
-import {enableValidation, arrForValidation} from "../components/validate";
-// import {initialCardGenerate} from "../components/utils";
-import {getInitialCards, getUserProfile, saveProfileAva, saveProfileAvatar} from "../components/api";
-import {handlerProfileFormSubmit, renderUserProfile, updateAva} from "../components/profile";
+import {Api} from "../components/Api";
+import {Card} from "../components/Card"
+import {PopupWithImage} from "../components/PopupWithImg"
+import {PopupWithForm} from '../components/PopupWithForm';
+import {Section} from "../components/Section"
+import {UserInfo} from "../components/UserInfo"
+import {FormValidate} from "../components/FormValidate"
+import {
+    config,
+    cardConfig,
+    avatar,
+    avatarObj,
+    imagePreviewConfig,
+    popupEditConfig,
+    popupPhoto,
+    popupAddConfig,
+    validateConfig,
+    buttons,
+    popupsWithForm,
+    avatarImg,
+    profileAvatar
+} from "../utils/constants"
 
-const profile = document.querySelector('.profile');
-export const profileName = profile.querySelector('.profile__name');
-export const profileWork = profile.querySelector('.profile__work-place');
-const profileEditButton = profile.querySelector('.profile__btn-edit');
-export const profileAvatar = profile.querySelector('.profile__avatar')
+//api
+const api = new Api(config)
 
-export const modalProfile = document.querySelector('.popup_profile')
-export const inputName = modalProfile.querySelector('.form__input_name');
-export const inputProfile = modalProfile.querySelector('.form__input_profile');
+// user Info
+const userInfo = new UserInfo(popupEditConfig.nameInfo, popupEditConfig.jobInfo, avatarImg);
 
-export const modalAvatar = document.querySelector('.popup_avatar')
-export const formAvatar = modalAvatar.querySelector('.form_avatar')
-export const inputAvatar = formAvatar.querySelector('.form__input_avatar')
+// Модальные окна
+const popupWithImg = new PopupWithImage(popupPhoto);
 
-export const modalAdd = document.querySelector('.popup_mesto')
-export const formMesto = modalAdd.querySelector('.form_mesto')
-export const inputLocation = modalAdd.querySelector('.form__input_location');
-export const inputUrl = modalAdd.querySelector('.form__input_url');
-export const modalAddBtn = modalAdd.querySelector('.popup__submit_mesto')
-
-// CALLBACKS
-// profile
-
-// closeAllPopUps();
-document.querySelectorAll('.popup__close').forEach(elem => {
-    elem.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup')))
-})
-
-//открытие попапа с редактированием профиля
-profileEditButton.addEventListener('click', () => {
-    openPopup(modalProfile);
-    inputName.value = profileName.textContent;
-    inputProfile.value = profileWork.textContent;
-})
-
-//Обработка события форма редактирования профиля
-modalProfile.querySelector('.form_profile').addEventListener('submit', (evt) => {
- handlerProfileFormSubmit()
-})
-
-//открытие попапа редактирования авы
-profileAvatar.addEventListener('click', () => openPopup(modalAvatar))
-
-formAvatar.addEventListener('submit', () => {
-    updateAva()
-})
-
-// add
-//Открытие попапа с добавлением места
-profile.querySelector('.profile__btn-add').addEventListener('click', () => {
-    openPopup(modalAdd)
+const popupAdd = new PopupWithForm(popupsWithForm.addPopup, {
+    submitHandler: (data) => {
+        buttons.add.textContent = 'Сохранение ...';
+        api.addNewCard(data.location, data.url)
+            .then(result => {
+                const addCard = createCard(result);
+                section.addItem(addCard, 'prepend');
+                popupAdd.close();
+            })
+            .catch(result => console.log(result))
+            .finally(() => {
+                buttons.add.textContent = 'Сохранить'
+            })
+    }
 });
-
-
-formMesto.addEventListener('submit', (evt) => {
-    addNewUserCard()
+const popupEdit = new PopupWithForm(popupsWithForm.editPopup, {
+    submitHandler: (data) => {
+        buttons.edit.textContent = 'Сохранение ...';
+        api.saveProfileData(data.name, data.profession)
+            .then(result => {
+                console.log(result)
+                userInfo.setUserInfo(result.name, result.about)
+                popupEdit.close()
+            })
+            .catch(result => console.log(result))
+            .finally(() => buttons.edit.textContent = 'Сохранить')
+    }
+});
+const popupAvatar = new PopupWithForm(popupsWithForm.avatar, {
+    submitHandler: (data) => {
+        buttons.avatar.textContent = 'Сохранение ...';
+        api.saveProfileAvatar(data.avatar)
+            .then(result => {
+                userInfo.setUserAvatar(result.avatar)
+                popupAvatar.close()
+            })
+            .catch(result => console.log(`${result} ошибка тут`))
+            .finally(() => buttons.avatar.textContent = 'Сохранить')
+    }
 })
 
-//рендер информации о пользователе и карточек с сервера
-Promise.all([getUserProfile(), getInitialCards()]).then(([userData, cards]) => {
-    getId(userData._id)
-    renderUserProfile(userData.name, userData.about, userData.avatar)
-    addInitialCards(cards)
+// Вызов модальных окон
+popupWithImg.setEventListeners();
+popupAdd.setEventListeners();
+popupAddConfig.addButton.addEventListener('click', () => {
+    popupAdd.open()
+});
+popupEdit.setEventListeners();
+
+function handlePopupEdit() {
+    const profileInfo = userInfo.getUserInfo();
+    popupEditConfig.nameInput.value = profileInfo.name;
+    popupEditConfig.jobInput.value = profileInfo.about;
+    popupEdit.open();
+}
+
+popupEditConfig.editBtn.addEventListener('click', handlePopupEdit);
+
+popupAvatar.setEventListeners()
+profileAvatar.addEventListener('click', () => {
+    popupAvatar.open()
 })
-    .catch(res => {
-        console.log(res)
+
+// Section
+const section = new Section({
+    renderer: (item) => {
+        const newCard = createCard(item);
+        section.addItem(newCard, 'append');
+    }
+}, '.cards');
+
+// Create Card
+function createCard(item) {
+    const userId = userInfo.getUserId()
+    const element = new Card(item, {
+        handleImageClick: (link, alt) => {
+            popupWithImg.open({link, alt});
+        }
+    }, '.card', userId, api, cardConfig);
+    const card = element.generateCard();
+    return card;
+}
+
+// Promise All
+Promise.all([api.getUserProfile(), api.getInitialCards()])
+    .then(([userData, cards]) => {
+        userInfo.setUserInfo(userData.name, userData.about, userData._id);
+        userInfo.setUserAvatar(userData.avatar);
+        section.renderItems(cards)
+        return section;
     })
+    .catch(res => {console.log(res)})
 
+const formProfileValidation = new FormValidate(validateConfig, popupsWithForm.editPopup);
+formProfileValidation.enableValidation();
 
-//validity
+const addCardValidation = new FormValidate(validateConfig, popupsWithForm.addPopup);
+addCardValidation.enableValidation();
 
-enableValidation(arrForValidation)
-
-
-
-
-
+const avatarValidation = new FormValidate(validateConfig, popupsWithForm.avatar);
+avatarValidation.enableValidation();

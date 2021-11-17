@@ -22,6 +22,8 @@
 @import url('../blocks/profile/__edit/profile__btn-edit.css');
 @import url('../blocks/profile/__work-place/profile__work-place.css');
 @import url('../blocks/profile/__btn-add/profile__btn-add.css');
+@import url('../blocks/profile/__avatar-button/profile__avatar-button.css');
+@import url('../blocks/profile/__avatar-container/profile__avatar-container.css');
 
 /* elements */
 @import url('../blocks/elements/elements.css');
